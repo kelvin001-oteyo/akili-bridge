@@ -1,0 +1,130 @@
+/* Footer.css */
+.footer {
+  position: relative;
+  overflow: hidden;
+  padding: 3rem 2rem 1.5rem;
+  color: #ffffff;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.footer-logo-section {
+  max-width: 300px;
+}
+
+.footer-logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  letter-spacing: -0.5px;
+}
+
+.footer-logo span {
+  color: #ffd966;
+}
+
+.quick-links ul li a {
+  display: inline-block;
+  position: relative;
+}
+
+.quick-links ul li a::before {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #ffd966;
+  transition: width 0.3s ease;
+}
+
+.quick-links ul li a:hover::before {
+  width: 100%;
+}
+
+.newsletter input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer {
+    padding: 2rem 1rem 1rem;
+  }
+  
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    text-align: center;
+  }
+  
+  .footer-logo-section {
+    max-width: 100%;
+    text-align: center;
+  }
+  
+  .quick-links ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .quick-links ul li {
+    margin-bottom: 0 !important;
+  }
+  
+  .socials div {
+    justify-content: center;
+  }
+  
+  .newsletter form {
+    flex-direction: column;
+  }
+  
+  .newsletter input,
+  .newsletter button {
+    width: 100%;
+  }
+  
+  .footer-bottom div {
+    flex-direction: column;
+    gap: 0.5rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-logo {
+    font-size: 1.5rem;
+  }
+  
+  .socials a {
+    padding: 6px 12px !important;
+    font-size: 0.9rem;
+  }
+}
+
+/* Custom Scrollbar for the whole app (optional) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(10, 20, 40, 0.9);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ffd966;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ffcc44;
+}
