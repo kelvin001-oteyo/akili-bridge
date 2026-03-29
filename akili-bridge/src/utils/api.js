@@ -1,3 +1,6 @@
+// src/utils/api.js
+
+// Use environment variable in production, fallback to localhost in dev
 const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
 function getCookie(name) {
@@ -79,6 +82,7 @@ export async function apiFetch(endpoint, options = {}) {
 
   let res = await fetch(`${API_URL}${endpoint}`, requestOptions);
 
+  // Handle expired access token with refresh
   if (res.status === 401 && refresh) {
     const refreshRes = await fetch(`${API_URL}/api/auth/refresh/`, {
       method: "POST",
