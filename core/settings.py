@@ -5,14 +5,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-secret-key")
 
-DEBUG = False  # ✅ IMPORTANT for production
+DEBUG = False  # ✅ Production mode
 
-ALLOWED_HOSTS = ['*']
-
+# Explicitly list your domains
+ALLOWED_HOSTS = [
+    "akili-bridge.onrender.com",  # ✅ your Render domain
+    "localhost",
+    "127.0.0.1",
+]
 
 # Custom User Model
 AUTH_USER_MODEL = 'fellowship.User'
-
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -29,7 +32,6 @@ INSTALLED_APPS = [
     "resources",
 ]
 
-
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
@@ -45,17 +47,15 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-
-# CORS (update later with your frontend URL)
+# ✅ CORS setup
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "https://akili-bridge.onrender.com",  # ✅ allow your live frontend
 ]
 CORS_ALLOW_CREDENTIALS = True
 
-
 ROOT_URLCONF = "core.urls"
-
 
 TEMPLATES = [
     {
@@ -72,9 +72,7 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = "core.wsgi.application"
-
 
 DATABASES = {
     "default": {
@@ -83,7 +81,6 @@ DATABASES = {
     }
 }
 
-
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
@@ -91,27 +88,24 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-
-# ✅ STATIC FILES (VERY IMPORTANT)
+# ✅ Static files
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# WhiteNoise optimization
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+# ⚠️ Only include this if you are serving React build from Django
+# If frontend is deployed separately on Render, you can remove this line
 STATICFILES_DIRS = [BASE_DIR.parent / "frontend" / "dist"]
 
-
-# MEDIA FILES
+# ✅ Media files
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
-
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
@@ -125,8 +119,7 @@ REST_FRAMEWORK = {
     ],
 }
 
-
-# EMAIL CONFIG (leave for now, or update later)
+# ✅ Email config (placeholder, update with real credentials)
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.yourprovider.com"
 EMAIL_PORT = 587
