@@ -5,17 +5,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-secret-key")
 
-DEBUG = False  # ✅ Production mode
+DEBUG = False  # Production mode
 
 # Explicitly list your domains
 ALLOWED_HOSTS = [
-    "akili-bridge.onrender.com",  # ✅ your Render domain
+    "akili-bridge.onrender.com",
     "localhost",
     "127.0.0.1",
 ]
 
 # Custom User Model
-AUTH_USER_MODEL = 'fellowship.User'
+AUTH_USER_MODEL = "fellowship.User"
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -35,10 +35,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
-
-    # ✅ WhiteNoise (for static files on Render)
     "whitenoise.middleware.WhiteNoiseMiddleware",
-
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -47,11 +44,11 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-# ✅ CORS setup
+# CORS setup
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "https://akili-bridge.onrender.com",  # ✅ allow your live frontend
+    "https://akili-bridge.onrender.com",
 ]
 CORS_ALLOW_CREDENTIALS = True
 
@@ -60,7 +57,7 @@ ROOT_URLCONF = "core.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "frontend"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -93,17 +90,11 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# ✅ Static files
 STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_DIRS = [BASE_DIR / "frontend" / "assets"]
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# ⚠️ Only include this if you are serving React build from Django
-# If frontend is deployed separately on Render, you can remove this line
-STATICFILES_DIRS = [BASE_DIR.parent / "frontend" / "dist"]
-
-# ✅ Media files
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
@@ -119,7 +110,6 @@ REST_FRAMEWORK = {
     ],
 }
 
-# ✅ Email config (placeholder, update with real credentials)
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.yourprovider.com"
 EMAIL_PORT = 587
