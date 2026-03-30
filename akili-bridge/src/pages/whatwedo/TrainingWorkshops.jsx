@@ -1,7 +1,9 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 export default function TrainingWorkshops() {
+  const navigate = useNavigate();
   const focusAreas = [
     "Research methodologies & experimental design",
     "Scientific writing & publishing strategies",
@@ -214,6 +216,7 @@ export default function TrainingWorkshops() {
                   className="register-btn"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.98 }}
+                  onClick={() => navigate("/careers/application")}
                 >
                   Register Now →
                 </motion.button>
@@ -265,6 +268,7 @@ export default function TrainingWorkshops() {
             className="cta-button"
             whileHover={{ scale: 1.05, boxShadow: "0 10px 30px rgba(255, 106, 0, 0.4)" }}
             whileTap={{ scale: 0.98 }}
+            onClick={() => navigate("/careers/application")}
           >
             <span className="button-text">Join Our Upcoming Workshops & Bootcamps!</span>
             <motion.span

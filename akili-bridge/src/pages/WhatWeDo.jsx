@@ -1,10 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const MotionLink = motion(Link);
 
 export default function WhatWeDo() {
+  const navigate = useNavigate();
   const programs = [
     {
       title: "Fellowship Program",
@@ -248,6 +249,7 @@ export default function WhatWeDo() {
             className="cta-button"
             whileHover={{ scale: 1.05, boxShadow: "0 10px 30px rgba(255, 106, 0, 0.4)" }}
             whileTap={{ scale: 0.98 }}
+            onClick={() => navigate("/careers/application")}
           >
             <span className="button-text">Join Our Community</span>
             <motion.span

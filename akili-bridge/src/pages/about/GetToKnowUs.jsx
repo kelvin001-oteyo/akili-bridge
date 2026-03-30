@@ -1,7 +1,9 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 export default function GetToKnowUs() {
+  const navigate = useNavigate();
   const challenges = [
     {
       title: "Limited Indigenous Research Investment and Training",
@@ -180,6 +182,7 @@ export default function GetToKnowUs() {
             className="cta-button"
             whileHover={{ scale: 1.05, boxShadow: "0 10px 30px rgba(255, 106, 0, 0.4)" }}
             whileTap={{ scale: 0.98 }}
+            onClick={() => navigate("/careers/application")}
           >
             <span className="button-text">Get Involved</span>
             <motion.span

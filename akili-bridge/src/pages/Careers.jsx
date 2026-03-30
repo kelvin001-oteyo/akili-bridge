@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import "./Careers.css";
 
 export default function Careers() {
+  const navigate = useNavigate();
   return (
     <div className="careers-page">
       {/* Hero Section */}
@@ -68,6 +70,7 @@ export default function Careers() {
           className="careers-btn"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
+          onClick={() => navigate("/careers/application")}
         >
           Apply Now
         </motion.button>

@@ -1,8 +1,10 @@
 import React from "react";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Fellowship() {
+  const navigate = useNavigate();
   const phases = [
     {
       title: "Foundations & Orientation (Weeks 1–4)",
@@ -278,6 +280,7 @@ export default function Fellowship() {
             className="cta-button"
             whileHover={{ scale: 1.05, boxShadow: "0 10px 30px rgba(255, 106, 0, 0.4)" }}
             whileTap={{ scale: 0.98 }}
+            onClick={() => navigate("/careers/application")}
           >
             <span className="button-text">Apply Now</span>
             <motion.span

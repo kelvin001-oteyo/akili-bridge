@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const labs = [
   {
@@ -61,6 +62,7 @@ const labs = [
 ];
 
 export default function Labs() {
+  const navigate = useNavigate();
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -174,6 +176,10 @@ export default function Labs() {
                   className="lab-link"
                   style={{ color: lab.color }}
                   whileHover={{ x: 5 }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate("/careers/application");
+                  }}
                 >
                   Explore Lab →
                 </motion.a>
@@ -193,6 +199,7 @@ export default function Labs() {
             className="cta-button"
             whileHover={{ scale: 1.05, boxShadow: "0 10px 30px rgba(255, 106, 0, 0.4)" }}
             whileTap={{ scale: 0.98 }}
+            onClick={() => navigate("/careers/application")}
           >
             <span className="button-text">Join a Research Lab</span>
             <motion.span

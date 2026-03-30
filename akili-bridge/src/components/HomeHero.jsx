@@ -1,9 +1,11 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "./HomeHero.css";
 
 export default function HomeHero() {
   const containerRef = useRef(null);
+  const navigate = useNavigate();
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"]
@@ -113,6 +115,7 @@ export default function HomeHero() {
             className="hero-btn primary-btn"
             whileHover={{ scale: 1.05, boxShadow: "0 10px 30px rgba(0,0,0,0.3)" }}
             whileTap={{ scale: 0.98 }}
+            onClick={() => navigate("/careers/application")}
           >
             Learn More
             <motion.span
@@ -128,6 +131,7 @@ export default function HomeHero() {
             className="hero-btn secondary-btn"
             whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.2)" }}
             whileTap={{ scale: 0.98 }}
+            onClick={() => navigate("/careers/application")}
           >
             <span>🎓</span>
             Apply Now

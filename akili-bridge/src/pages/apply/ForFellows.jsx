@@ -1,7 +1,9 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 export default function ForFellows() {
+  const navigate = useNavigate();
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -269,6 +271,7 @@ export default function ForFellows() {
             className="cta-button"
             whileHover={{ scale: 1.05, boxShadow: "0 10px 30px rgba(255, 106, 0, 0.4)" }}
             whileTap={{ scale: 0.98 }}
+            onClick={() => navigate("/careers/application")}
           >
             <span className="button-text">Apply Now</span>
             <motion.span
