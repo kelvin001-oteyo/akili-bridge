@@ -1,6 +1,9 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import "./Footer.css";
+
+const MotionLink = motion(Link);
 
 export default function Footer() {
   const footerRef = useRef(null);
@@ -162,11 +165,11 @@ export default function Footer() {
           </motion.h4>
           <ul style={{ listStyle: "none", padding: 0 }}>
             {[
-              { name: "Who We Are", path: "/about" },
-              { name: "Get to Know Us", path: "/about" },
-              { name: "Fellowship Program", path: "/fellowship" },
-              { name: "Training & Workshops", path: "/training-workshops" },
-              { name: "For Fellows", path: "/fellows" }
+              { name: "Who We Are", path: "/about/who-we-are" },
+              { name: "Get to Know Us", path: "/about/get-to-know-us" },
+              { name: "Fellowship Program", path: "/what-we-do/fellowship" },
+              { name: "Training & Workshops", path: "/what-we-do/training" },
+              { name: "For Fellows", path: "/apply/fellows" }
             ].map((link, index) => (
               <motion.li
                 key={link.name}
@@ -175,8 +178,8 @@ export default function Footer() {
                 custom={index}
                 style={{ marginBottom: "0.75rem" }}
               >
-                <motion.a
-                  href={link.path}
+                <MotionLink
+                  to={link.path}
                   style={{
                     color: "#ffffff",
                     textDecoration: "none",
@@ -186,7 +189,7 @@ export default function Footer() {
                   whileHover={{ color: "#ffd966" }}
                 >
                   {link.name}
-                </motion.a>
+                </MotionLink>
               </motion.li>
             ))}
           </ul>

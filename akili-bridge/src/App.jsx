@@ -8,6 +8,7 @@ import Labs from "./pages/Labs";
 import Careers from "./pages/Careers";
 import News from "./pages/News";
 import Footer from "./components/Footer";
+import BlogDetail from "./components/BlogDetail";
 
 // Sub-pages
 import GetToKnowUs from "./pages/about/GetToKnowUs";
@@ -57,6 +58,7 @@ function App() {
         <Route path="/careers/application" element={<CareersApplication />} />
 
         <Route path="/news" element={<News />} />
+        <Route path="/blog/:id" element={<BlogDetail />} />
 
         {/* Auth routes */}
         <Route path="/auth" element={<Auth />} />

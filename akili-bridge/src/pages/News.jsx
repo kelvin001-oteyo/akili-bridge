@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import { apiFetch } from "../utils/api";  // ✅ import your helper
+
+const MotionLink = motion(Link);
 
 export default function WhatsNew() {
   const [posts, setPosts] = useState([]);
@@ -218,13 +221,13 @@ useEffect(() => {
                     </div>
                     <h2 className="post-title">{post.title}</h2>
                     <p className="post-excerpt">{post.excerpt}</p>
-                    <motion.a
-                      href={post.link}
+                    <MotionLink
+                      to={post.link}
                       className="post-link"
                       whileHover={{ x: 5 }}
                     >
                       Read More →
-                    </motion.a>
+                    </MotionLink>
                   </div>
                 </motion.article>
               ))}

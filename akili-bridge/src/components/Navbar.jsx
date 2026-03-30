@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
+
+const MotionLink = motion(Link);
 
 export default function Navbar() {
   const [openMenu, setOpenMenu] = useState(null);
@@ -140,10 +142,12 @@ export default function Navbar() {
 
         <div className="navbar-container">
           {/* Logo with Animation */}
-          <motion.div
+          <MotionLink
+            to="/"
             className="logo"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={closeMenus}
           >
             <motion.span
               className="logo-text"
@@ -167,7 +171,7 @@ export default function Navbar() {
               animate={{ scale: 1 }}
               transition={{ delay: 0.3, type: "spring" }}
             />
-          </motion.div>
+          </MotionLink>
 
           {/* Desktop Navigation */}
           <ul className="nav-links">
@@ -251,7 +255,7 @@ export default function Navbar() {
                               whileHover={{ x: 8 }}
                               whileTap={{ scale: 0.98 }}
                             >
-                              <a href={subItem.path}>{subItem.name}</a>
+                              <Link to={subItem.path} onClick={closeMenus}>{subItem.name}</Link>
                             </motion.li>
                           ))}
                         </motion.ul>
@@ -259,14 +263,14 @@ export default function Navbar() {
                     </AnimatePresence>
                   </>
                 ) : (
-                  <motion.a
-                    href={item.path}
+                  <MotionLink
+                    to={item.path}
                     onClick={closeMenus}
                     whileHover={{ scale: 1.05, color: "#ffd966" }}
                     whileTap={{ scale: 0.95 }}
                   >
                     {item.name}
-                  </motion.a>
+                  </MotionLink>
                 )}
               </motion.li>
             ))}
@@ -310,15 +314,15 @@ export default function Navbar() {
                 animate="visible"
                 custom={10}
               >
-                <motion.a
-                  href="/auth"
+                <MotionLink
+                  to="/auth"
                   onClick={closeMenus}
                   className="auth-link"
                   whileHover={{ scale: 1.05, color: "#ffd966" }}
                   whileTap={{ scale: 0.95 }}
                 >
                   Register / Login
-                </motion.a>
+                </MotionLink>
               </motion.li>
             )}
           </ul>
@@ -396,9 +400,9 @@ export default function Navbar() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.05 }}
                   >
-                    <a href={item.path} onClick={closeMenus}>
+                    <Link to={item.path} onClick={closeMenus}>
                       {item.name}
-                    </a>
+                    </Link>
                   </motion.li>
                 ))}
                 
@@ -436,13 +440,13 @@ export default function Navbar() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.7 }}
                   >
-                    <a
-                      href="/auth"
+                    <Link
+                      to="/auth"
                       onClick={closeMenus}
                       className="mobile-auth-link"
                     >
                       Register / Login
-                    </a>
+                    </Link>
                   </motion.li>
                 )}
               </ul>

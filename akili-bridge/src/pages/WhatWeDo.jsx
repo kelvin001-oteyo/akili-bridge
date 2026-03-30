@@ -1,5 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+
+const MotionLink = motion(Link);
 
 export default function WhatWeDo() {
   const programs = [
@@ -13,7 +16,7 @@ export default function WhatWeDo() {
         "Career development workshops",
         "Publication opportunities"
       ],
-      link: "/fellowship",
+      link: "/what-we-do/fellowship",
       color: "#ff6a00"
     },
     {
@@ -26,7 +29,7 @@ export default function WhatWeDo() {
         "Scientific writing bootcamps",
         "Policy impact sessions"
       ],
-      link: "/training-workshops",
+      link: "/what-we-do/training",
       color: "#2ecc71"
     },
     {
@@ -39,7 +42,7 @@ export default function WhatWeDo() {
         "Conference presentations",
         "Publication support"
       ],
-      link: "/for-fellows",
+      link: "/apply/fellows",
       color: "#3498db"
     },
     {
@@ -52,7 +55,7 @@ export default function WhatWeDo() {
         "Collaborative opportunities",
         "Recognition and impact"
       ],
-      link: "/for-mentors",
+      link: "/apply/mentors",
       color: "#e74c3c"
     },
     {
@@ -78,7 +81,7 @@ export default function WhatWeDo() {
         "Collaborative projects",
         "Alumni network"
       ],
-      link: "/community",
+      link: "/news",
       color: "#f1c40f"
     }
   ];
@@ -194,14 +197,14 @@ export default function WhatWeDo() {
                   ))}
                 </ul>
               </div>
-              <motion.a
-                href={program.link}
+              <MotionLink
+                to={program.link}
                 className="program-link"
                 style={{ color: program.color }}
                 whileHover={{ x: 5 }}
               >
                 Learn More →
-              </motion.a>
+              </MotionLink>
             </motion.div>
           ))}
         </motion.div>
