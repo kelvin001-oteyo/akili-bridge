@@ -1,7 +1,11 @@
 // src/utils/api.js
 
-// Use environment variable in production, fallback to localhost in dev
-const API_URL = import.meta.env.VITE_API_URL || "https://akili-bridge.onrender.com";
+// Use environment variable if configured; fallback to local backend in development and production backend otherwise.
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.MODE === "development"
+    ? "http://127.0.0.1:8000"
+    : "https://akili-bridge.onrender.com");
 
 function getCookie(name) {
   return document.cookie

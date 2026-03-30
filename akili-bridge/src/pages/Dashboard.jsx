@@ -82,7 +82,19 @@ export default function Dashboard() {
         throw new Error(message);
       }
 
-      return Array.isArray(data) ? data : [];
+      if (Array.isArray(data)) {
+        return data;
+      }
+
+      if (data?.results && Array.isArray(data.results)) {
+        return data.results;
+      }
+
+      if (data?.data && Array.isArray(data.data)) {
+        return data.data;
+      }
+
+      return [];
     };
 
     const fetchDashboardData = async () => {

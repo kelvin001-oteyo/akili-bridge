@@ -1,0 +1,19 @@
+# Python virtual environment
+venv/
+
+# Bytecode files
+__pycache__/
+*.py[cod]
+
+# Database files
+*.sqlite3
+
+# IDE/editor files
+.vscode/
+.idea/
+
+# Log files
+*.log
+
+# MacOS
+.DS_Store
