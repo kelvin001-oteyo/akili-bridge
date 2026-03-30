@@ -5,16 +5,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-secret-key")
 
-DEBUG = False  # Production mode
+DEBUG = False
 
-# Explicitly list your domains
 ALLOWED_HOSTS = [
     "akili-bridge.onrender.com",
     "localhost",
     "127.0.0.1",
 ]
 
-# Custom User Model
 AUTH_USER_MODEL = "fellowship.User"
 
 INSTALLED_APPS = [
@@ -35,7 +33,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # ✅ important
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -44,7 +42,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-# CORS setup
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
@@ -54,10 +51,11 @@ CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = "core.urls"
 
+# ✅ TEMPLATE FIX
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "frontend"],
+        "DIRS": [BASE_DIR / "frontend"],  # serves index.html
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -90,11 +88,18 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
+# ✅ STATIC FILES (CRITICAL FIX)
 STATIC_URL = "/static/"
+
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [BASE_DIR / "frontend" / "assets"]
+
+STATICFILES_DIRS = [
+    BASE_DIR / "frontend" / "assets",  # 👈 this is correct
+]
+
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+# ✅ MEDIA
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
