@@ -1,35 +1,16 @@
 from django.contrib import admin
 from django.urls import path, include
-from django.http import JsonResponse
+from core.views import frontend  # 👈 IMPORT THIS
 
 from fellowship.views import RegisterView, LoginView
-from rest_framework_simplejwt.views import (
-    TokenRefreshView,
-)
+from rest_framework_simplejwt.views import TokenRefreshView
 
 from django.conf import settings
 from django.conf.urls.static import static
 
 
-# ✅ Homepage (fixes 404)
-def home(request):
-    return JsonResponse({
-        "status": "success",
-        "message": "Akili Bridge API is live 🚀",
-        "endpoints": {
-            "admin": "/admin/",
-            "auth_register": "/api/auth/register/",
-            "auth_login": "/api/auth/login/",
-            "auth_refresh": "/api/auth/refresh/",
-            "blog": "/api/blog/",
-            "resources": "/api/resources/",
-            "fellowship": "/api/fellowship/"
-        }
-    })
-
-
 urlpatterns = [
-    path("", home),  # 👈 homepage route
+    path("", frontend),  # ✅ NOW SERVES YOUR FRONTEND
 
     path("admin/", admin.site.urls),
     path("api/fellowship/", include("fellowship.urls")),
