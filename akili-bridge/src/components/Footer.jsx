@@ -1,6 +1,13 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import {
+  FacebookIcon,
+  InstagramIcon,
+  LinkedInIcon,
+  MailIcon,
+  XIcon,
+} from "./Icons";
 import "./Footer.css";
 
 const MotionLink = motion(Link);
@@ -20,7 +27,6 @@ export default function Footer() {
     }
   };
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -28,9 +34,9 @@ export default function Footer() {
       transition: {
         staggerChildren: 0.15,
         delayChildren: 0.2,
-        duration: 0.6
-      }
-    }
+        duration: 0.6,
+      },
+    },
   };
 
   const itemVariants = {
@@ -38,8 +44,8 @@ export default function Footer() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: "easeOut" }
-    }
+      transition: { duration: 0.5, ease: "easeOut" },
+    },
   };
 
   const linkVariants = {
@@ -47,13 +53,13 @@ export default function Footer() {
     visible: {
       opacity: 1,
       x: 0,
-      transition: { duration: 0.3 }
+      transition: { duration: 0.3 },
     },
     hover: {
       x: 8,
       color: "#ffd966",
-      transition: { duration: 0.2 }
-    }
+      transition: { duration: 0.2 },
+    },
   };
 
   const socialVariants = {
@@ -61,14 +67,21 @@ export default function Footer() {
     visible: {
       opacity: 1,
       scale: 1,
-      transition: { duration: 0.3 }
+      transition: { duration: 0.3 },
     },
     hover: {
-      scale: 1.1,
+      scale: 1.05,
       y: -3,
-      transition: { duration: 0.2 }
-    }
+      transition: { duration: 0.2 },
+    },
   };
+
+  const socialLinks = [
+    { name: "Facebook", icon: FacebookIcon, link: "#" },
+    { name: "Instagram", icon: InstagramIcon, link: "#" },
+    { name: "X", icon: XIcon, link: "#" },
+    { name: "LinkedIn", icon: LinkedInIcon, link: "#" },
+  ];
 
   return (
     <motion.footer
@@ -78,14 +91,14 @@ export default function Footer() {
       animate={isInView ? "visible" : "hidden"}
       variants={containerVariants}
       style={{
-        backgroundImage: "url('https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2070&auto=format')",
+        backgroundImage:
+          "url('https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2070&auto=format')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
-        position: "relative"
+        position: "relative",
       }}
     >
-      {/* Animated Gradient Overlay */}
       <motion.div
         className="footer-overlay"
         initial={{ opacity: 0 }}
@@ -93,22 +106,15 @@ export default function Footer() {
         transition={{ duration: 1 }}
         style={{
           position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: "linear-gradient(135deg, rgba(10, 20, 40, 0.95) 0%, rgba(5, 15, 30, 0.92) 100%)",
-          zIndex: 0
+          inset: 0,
+          background:
+            "linear-gradient(135deg, rgba(10, 20, 40, 0.95) 0%, rgba(5, 15, 30, 0.92) 100%)",
+          zIndex: 0,
         }}
       />
 
       <div className="footer-content" style={{ position: "relative", zIndex: 1 }}>
-        {/* Logo Section with Animation */}
-        <motion.div
-          className="footer-logo-section"
-          variants={itemVariants}
-          whileHover={{ scale: 1.02 }}
-        >
+        <motion.div className="footer-logo-section" variants={itemVariants} whileHover={{ scale: 1.02 }}>
           <motion.div
             className="footer-logo"
             initial={{ opacity: 0, scale: 0.8 }}
@@ -116,7 +122,7 @@ export default function Footer() {
             transition={{ duration: 0.6, delay: 0.2 }}
             whileHover={{ textShadow: "0 0 20px rgba(255,217,102,0.5)" }}
           >
-            Akili <span style={{ color: "#ffd966" }}>BRIDGE</span>
+            Akili <span>BRIDGE</span>
           </motion.div>
           <motion.p
             variants={itemVariants}
@@ -125,16 +131,12 @@ export default function Footer() {
             transition={{ delay: 0.3 }}
             style={{ lineHeight: 1.6 }}
           >
-            As a result, the continent struggles to cultivate a new generation of
-            Indigenous researchers who can effectively address local challenges.
+            Building stronger pathways for African researchers through mentorship,
+            training, and opportunity.
           </motion.p>
         </motion.div>
 
-        {/* Quick Links Section */}
-        <motion.div
-          className="quick-links"
-          variants={itemVariants}
-        >
+        <motion.div className="quick-links" variants={itemVariants}>
           <motion.h4
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -144,12 +146,11 @@ export default function Footer() {
               marginBottom: "1rem",
               color: "#ffd966",
               position: "relative",
-              display: "inline-block"
+              display: "inline-block",
             }}
           >
             Quick Links
             <motion.span
-              className="link-underline"
               initial={{ width: 0 }}
               animate={{ width: "100%" }}
               transition={{ delay: 0.6, duration: 0.5 }}
@@ -159,7 +160,7 @@ export default function Footer() {
                 left: 0,
                 height: "2px",
                 background: "#ffd966",
-                borderRadius: "2px"
+                borderRadius: "2px",
               }}
             />
           </motion.h4>
@@ -169,7 +170,7 @@ export default function Footer() {
               { name: "Get to Know Us", path: "/about/get-to-know-us" },
               { name: "Fellowship Program", path: "/what-we-do/fellowship" },
               { name: "Training & Workshops", path: "/what-we-do/training" },
-              { name: "For Fellows", path: "/apply/fellows" }
+              { name: "For Fellows", path: "/apply/fellows" },
             ].map((link, index) => (
               <motion.li
                 key={link.name}
@@ -184,7 +185,7 @@ export default function Footer() {
                     color: "#ffffff",
                     textDecoration: "none",
                     transition: "color 0.2s",
-                    display: "inline-block"
+                    display: "inline-block",
                   }}
                   whileHover={{ color: "#ffd966" }}
                 >
@@ -195,30 +196,17 @@ export default function Footer() {
           </ul>
         </motion.div>
 
-        {/* Newsletter Section with Animation */}
-        <motion.div
-          className="newsletter"
-          variants={itemVariants}
-        >
+        <motion.div className="newsletter" variants={itemVariants}>
           <motion.h4
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            style={{ marginBottom: "1rem", color: "#ffd966" }}
+            style={{ marginBottom: "1rem", color: "#ffd966", display: "flex", alignItems: "center", gap: "0.5rem" }}
           >
-            Don't miss out — subscribe here!
-            <motion.span
-              animate={{ rotate: [0, 10, -10, 0] }}
-              transition={{ delay: 1, duration: 0.5, repeat: 2 }}
-              style={{ display: "inline-block", marginLeft: "8px" }}
-            >
-              📧
-            </motion.span>
+            <MailIcon style={{ width: "1rem", height: "1rem" }} />
+            Subscribe for updates
           </motion.h4>
-          <motion.form
-            onSubmit={handleSubscribe}
-            style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}
-          >
+          <motion.form onSubmit={handleSubscribe} style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
             <motion.input
               type="email"
               placeholder="Enter your official email address"
@@ -234,7 +222,7 @@ export default function Footer() {
                 color: "#ffffff",
                 fontSize: "0.9rem",
                 outline: "none",
-                transition: "all 0.2s"
+                transition: "all 0.2s",
               }}
             />
             <motion.button
@@ -250,10 +238,10 @@ export default function Footer() {
                 color: "#1a2a3a",
                 fontWeight: "bold",
                 cursor: "pointer",
-                transition: "all 0.2s"
+                transition: "all 0.2s",
               }}
             >
-              {subscribed ? "✓ Subscribed!" : "Subscribe"}
+              {subscribed ? "Subscribed" : "Subscribe"}
             </motion.button>
           </motion.form>
           {subscribed && (
@@ -262,16 +250,12 @@ export default function Footer() {
               animate={{ opacity: 1, y: 0 }}
               style={{ marginTop: "10px", color: "#ffd966", fontSize: "0.85rem" }}
             >
-              Thanks for subscribing! 🎉
+              Thanks for subscribing.
             </motion.p>
           )}
         </motion.div>
 
-        {/* Socials Section with Icons */}
-        <motion.div
-          className="socials"
-          variants={itemVariants}
-        >
+        <motion.div className="socials" variants={itemVariants}>
           <motion.h4
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -281,44 +265,41 @@ export default function Footer() {
             Connect With Us
           </motion.h4>
           <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
-            {[
-              { name: "Facebook", icon: "📘", link: "#" },
-              { name: "Instagram", icon: "📸", link: "#" },
-              { name: "Twitter", icon: "🐦", link: "#" },
-              { name: "LinkedIn", icon: "🔗", link: "#" }
-            ].map((social) => (
-              <motion.a
-                key={social.name}
-                href={social.link}
-                variants={socialVariants}
-                whileHover="hover"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  color: "#ffffff",
-                  textDecoration: "none",
-                  padding: "8px 16px",
-                  borderRadius: "25px",
-                  background: "rgba(255,255,255,0.1)",
-                  transition: "all 0.2s"
-                }}
-              >
-                <motion.span
-                  animate={{ rotate: [0, 360] }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                  style={{ fontSize: "1.2rem" }}
+            {socialLinks.map((social) => {
+              const Icon = social.icon;
+              return (
+                <motion.a
+                  key={social.name}
+                  href={social.link}
+                  variants={socialVariants}
+                  whileHover="hover"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    color: "#ffffff",
+                    textDecoration: "none",
+                    padding: "8px 16px",
+                    borderRadius: "25px",
+                    background: "rgba(255,255,255,0.1)",
+                    transition: "all 0.2s",
+                  }}
                 >
-                  {social.icon}
-                </motion.span>
-                {social.name}
-              </motion.a>
-            ))}
+                  <motion.span
+                    animate={{ rotate: [0, 360] }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    style={{ display: "inline-flex" }}
+                  >
+                    <Icon style={{ width: "1.15rem", height: "1.15rem" }} />
+                  </motion.span>
+                  {social.name}
+                </motion.a>
+              );
+            })}
           </div>
         </motion.div>
       </div>
 
-      {/* Footer Bottom with Animated Border */}
       <motion.div
         className="footer-bottom"
         initial={{ opacity: 0, y: 20 }}
@@ -330,7 +311,7 @@ export default function Footer() {
           borderTop: "1px solid rgba(255,217,102,0.2)",
           marginTop: "2rem",
           paddingTop: "1.5rem",
-          textAlign: "center"
+          textAlign: "center",
         }}
       >
         <motion.div
@@ -341,19 +322,18 @@ export default function Footer() {
             transform: "translateX(-50%)",
             width: "0%",
             height: "1px",
-            background: "#ffd966"
+            background: "#ffd966",
           }}
           animate={{ width: "50%" }}
           transition={{ delay: 0.9, duration: 0.8 }}
         />
         <div style={{ display: "flex", justifyContent: "center", gap: "20px", flexWrap: "wrap", fontSize: "0.85rem" }}>
-          <motion.p whileHover={{ color: "#ffd966" }}>© 2025 | All Rights Reserved.</motion.p>
+          <motion.p whileHover={{ color: "#ffd966" }}>&copy; 2025 | All Rights Reserved.</motion.p>
           <motion.p whileHover={{ color: "#ffd966" }}>StaffWEBMAIL | WebAdmin</motion.p>
           <motion.p whileHover={{ color: "#ffd966" }}>Designer Eon Promaxfy Ltd</motion.p>
         </div>
       </motion.div>
 
-      {/* Animated Background Particles Effect */}
       <motion.div
         className="footer-particles"
         style={{
@@ -364,7 +344,7 @@ export default function Footer() {
           height: "100%",
           pointerEvents: "none",
           overflow: "hidden",
-          zIndex: 0
+          zIndex: 0,
         }}
       >
         {[...Array(20)].map((_, i) => (
@@ -377,16 +357,16 @@ export default function Footer() {
               background: `rgba(255,217,102,${Math.random() * 0.3 + 0.1})`,
               borderRadius: "50%",
               bottom: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`
+              left: `${Math.random() * 100}%`,
             }}
             animate={{
               y: [0, -Math.random() * 100 - 50],
-              opacity: [0, 0.5, 0]
+              opacity: [0, 0.5, 0],
             }}
             transition={{
               duration: Math.random() * 5 + 3,
               repeat: Infinity,
-              delay: Math.random() * 5
+              delay: Math.random() * 5,
             }}
           />
         ))}

@@ -9,6 +9,7 @@ import Careers from "./pages/Careers";
 import News from "./pages/News";
 import Footer from "./components/Footer";
 import BlogDetail from "./components/BlogDetail";
+import FloatingWhatsAppButton from "./components/FloatingWhatsAppButton";
 
 // Sub-pages
 import GetToKnowUs from "./pages/about/GetToKnowUs";
@@ -78,6 +79,7 @@ function App() {
         />
       </Routes>
       <Footer />
+      <FloatingWhatsAppButton />
     </>
   );
 }

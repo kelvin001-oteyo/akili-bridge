@@ -1,6 +1,12 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  AcademicCapIcon,
+  ArrowRightIcon,
+  RocketIcon,
+  SparklesIcon,
+} from "./Icons";
 import "./HomeHero.css";
 
 export default function HomeHero() {
@@ -8,7 +14,7 @@ export default function HomeHero() {
   const navigate = useNavigate();
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end start"]
+    offset: ["start start", "end start"],
   });
 
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
@@ -22,10 +28,9 @@ export default function HomeHero() {
       style={{
         y: heroY,
         opacity: heroOpacity,
-        scale: heroScale
+        scale: heroScale,
       }}
     >
-      {/* Animated Background Overlay with Particles */}
       <div className="hero-bg-overlay">
         <div className="hero-particles">
           {[...Array(50)].map((_, i) => (
@@ -35,33 +40,32 @@ export default function HomeHero() {
               initial={{
                 x: Math.random() * window.innerWidth,
                 y: Math.random() * window.innerHeight,
-                scale: Math.random() * 0.5 + 0.3
+                scale: Math.random() * 0.5 + 0.3,
               }}
               animate={{
                 y: [null, -100, -200],
                 x: [null, Math.random() * 200 - 100, Math.random() * 200 - 100],
-                opacity: [0, 0.5, 0]
+                opacity: [0, 0.5, 0],
               }}
               transition={{
                 duration: Math.random() * 3 + 2,
                 repeat: Infinity,
                 delay: Math.random() * 5,
-                ease: "linear"
+                ease: "linear",
               }}
               style={{
                 position: "absolute",
                 width: `${Math.random() * 4 + 2}px`,
                 height: `${Math.random() * 4 + 2}px`,
-                background: `radial-gradient(circle, rgba(255,255,255,0.8), rgba(255,255,255,0))`,
+                background: "radial-gradient(circle, rgba(255,255,255,0.8), rgba(255,255,255,0))",
                 borderRadius: "50%",
-                pointerEvents: "none"
+                pointerEvents: "none",
               }}
             />
           ))}
         </div>
       </div>
 
-      {/* Main Content */}
       <motion.div
         className="hero-content"
         initial={{ opacity: 0, y: 50 }}
@@ -74,9 +78,13 @@ export default function HomeHero() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2, duration: 0.5 }}
         >
-          <span className="badge-icon">✨</span>
+          <span className="badge-icon">
+            <SparklesIcon style={{ width: "1rem", height: "1rem" }} />
+          </span>
           Empowering African Scholars
-          <span className="badge-icon">🚀</span>
+          <span className="badge-icon">
+            <RocketIcon style={{ width: "1rem", height: "1rem" }} />
+          </span>
         </motion.div>
 
         <motion.h1
@@ -85,7 +93,7 @@ export default function HomeHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
         >
-          Building Africa’s Next Generation of
+          Building Africa&apos;s Next Generation of
           <motion.span
             className="highlight-text"
             initial={{ opacity: 0, x: -20 }}
@@ -121,9 +129,9 @@ export default function HomeHero() {
             <motion.span
               animate={{ x: [0, 5, 0] }}
               transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-              style={{ marginLeft: "8px" }}
+              style={{ marginLeft: "8px", display: "inline-flex" }}
             >
-              →
+              <ArrowRightIcon style={{ width: "1rem", height: "1rem" }} />
             </motion.span>
           </motion.button>
 
@@ -133,12 +141,13 @@ export default function HomeHero() {
             whileTap={{ scale: 0.98 }}
             onClick={() => navigate("/careers/application")}
           >
-            <span>🎓</span>
+            <span className="button-icon-wrap">
+              <AcademicCapIcon style={{ width: "1rem", height: "1rem" }} />
+            </span>
             Apply Now
           </motion.button>
         </motion.div>
 
-        {/* Scroll Indicator */}
         <motion.div
           className="scroll-indicator"
           initial={{ opacity: 0 }}
@@ -156,7 +165,6 @@ export default function HomeHero() {
         </motion.div>
       </motion.div>
 
-      {/* Floating Shapes Decoration */}
       <div className="floating-shapes">
         {[...Array(6)].map((_, i) => (
           <motion.div
@@ -167,13 +175,13 @@ export default function HomeHero() {
               opacity: [0, 0.3, 0],
               scale: [0, 1, 0.5],
               y: [0, -100, -200],
-              x: [0, Math.random() * 100 - 50, Math.random() * 100 - 50]
+              x: [0, Math.random() * 100 - 50, Math.random() * 100 - 50],
             }}
             transition={{
               duration: Math.random() * 8 + 5,
               repeat: Infinity,
               delay: Math.random() * 3,
-              ease: "linear"
+              ease: "linear",
             }}
           />
         ))}
