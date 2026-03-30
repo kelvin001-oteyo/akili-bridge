@@ -81,7 +81,7 @@ export default function Auth() {
       // ✅ Redirect after login
       setTimeout(() => {
         if (data.user.is_admin) {
-          navigate("/admin/dashboard");
+          navigate("/admin-dashboard");
         } else {
           navigate("/dashboard");
         }

@@ -213,7 +213,7 @@ export default function Navbar() {
               },
               { name: "What's New", path: "/news", hasDropdown: false },
               { name: "Dashboard", path: "/dashboard", hasDropdown: false },
-              { name: "Admin Dashboard", path: "/admin/dashboard", hasDropdown: false }
+              { name: "Admin Dashboard", path: "/admin-dashboard", hasDropdown: false }
             ].map((item, index) => (
               <motion.li
                 key={item.name}
@@ -392,7 +392,7 @@ export default function Navbar() {
                   { name: "Careers Application Form", path: "/careers/application" },
                   { name: "What's New", path: "/news" },
                   { name: "Dashboard", path: "/dashboard" },
-                  { name: "Admin Dashboard", path: "/admin/dashboard" }
+                  { name: "Admin Dashboard", path: "/admin-dashboard" }
                 ].map((item, i) => (
                   <motion.li
                     key={item.name}
