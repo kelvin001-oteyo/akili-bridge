@@ -3,7 +3,7 @@ import { WhatsAppIcon } from "./Icons";
 import "./FloatingWhatsAppButton.css";
 
 const WHATSAPP_URL =
-  "https://api.whatsapp.com/send?text=Hello%20Akili%20Bridge%2C%20I%20would%20like%20to%20learn%20more.";
+  "https://api.whatsapp.com/send?phone=17859799051&text=Hello%20Akili%20Bridge%2C%20I%20would%20like%20to%20learn%20more.";
 
 export default function FloatingWhatsAppButton() {
   return (
