@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import User, FellowshipApplication, DashboardContent, UndergraduateApplication
+from .models import User, FellowshipApplication, DashboardContent, UndergraduateApplication, NewsletterSubscription
 
 @admin.register(DashboardContent)
 class DashboardContentAdmin(admin.ModelAdmin):
@@ -77,3 +77,10 @@ class UndergraduateApplicationAdmin(admin.ModelAdmin):
             return format_html('<a href="{}" target="_blank">Statement</a>', obj.statement.url)
         return "-"
     statement_link.short_description = "Statement"
+
+
+@admin.register(NewsletterSubscription)
+class NewsletterSubscriptionAdmin(admin.ModelAdmin):
+    list_display = ("email", "first_name", "last_name", "role", "source", "created_at")
+    search_fields = ("email", "first_name", "last_name", "source")
+    list_filter = ("role", "source", "created_at")

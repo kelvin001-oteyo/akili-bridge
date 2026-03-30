@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { apiFetch } from "../../utils/api";
 
 export default function CareersApplication() {
-  const [formData, setFormData] = useState({
+  const initialFormState = {
     fullName: "",
     email: "",
     phone: "",
@@ -20,7 +21,9 @@ export default function CareersApplication() {
     sop: null,
     cv: null,
     transcript: null,
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormState);
 
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -67,38 +70,50 @@ export default function CareersApplication() {
     setSubmitting(true);
 
     const submission = new FormData();
-    Object.keys(formData).forEach((key) => {
-      if (formData[key] !== null && formData[key] !== "") {
-        submission.append(key, formData[key]);
-      }
-    });
+    submission.append("full_name", formData.fullName);
+    submission.append("email", formData.email);
+    submission.append("country", formData.country);
+    submission.append("discipline", formData.degree);
+    submission.append("phone", formData.phone);
+    submission.append("university", formData.university);
+    submission.append("degree", formData.degree);
+    submission.append("year", formData.year);
+    submission.append("gpa", formData.gpa);
+    submission.append("availability", formData.availability);
+    submission.append("timezone", formData.timezone);
+    submission.append("lab1", formData.labFirst);
+    if (formData.labSecond) submission.append("lab2", formData.labSecond);
+    if (formData.portfolio) submission.append("portfolio", formData.portfolio);
+    if (formData.sampleWork) submission.append("sampleWork", formData.sampleWork);
+    if (formData.sop) submission.append("sop", formData.sop);
+    if (formData.cv) submission.append("cv", formData.cv);
+    if (formData.transcript) submission.append("transcript", formData.transcript);
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      setSubmitted(true);
-      setFormData({
-        fullName: "",
-        email: "",
-        phone: "",
-        university: "",
-        degree: "",
-        year: "",
-        country: "",
-        gpa: "",
-        availability: "",
-        timezone: "",
-        labFirst: "",
-        labSecond: "",
-        portfolio: "",
-        sampleWork: null,
-        sop: null,
-        cv: null,
-        transcript: null,
+      const res = await apiFetch("/api/fellowship/applications/", {
+        method: "POST",
+        body: submission,
       });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => null);
+        const message =
+          errorData?.detail ||
+          (errorData && typeof errorData === "object"
+            ? Object.entries(errorData)
+                .map(([key, value]) =>
+                  `${key}: ${Array.isArray(value) ? value.join(", ") : value}`
+                )
+                .join("; ")
+            : "Error submitting application. Please try again.");
+        throw new Error(message);
+      }
+
+      setSubmitted(true);
+      setFormData(initialFormState);
       setTimeout(() => setSubmitted(false), 5000);
     } catch (err) {
-      alert("Error submitting application. Please try again.");
+      alert(err.message || "Error submitting application. Please try again.");
     } finally {
       setSubmitting(false);
     }

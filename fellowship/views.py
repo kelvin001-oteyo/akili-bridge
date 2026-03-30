@@ -17,8 +17,9 @@ from .serializers import (
     DashboardContentSerializer,
     UndergraduateApplicationSerializer,
     NotificationSerializer,
+    NewsletterSubscriptionSerializer,
 )
-from .models import FellowshipApplication, DashboardContent, UndergraduateApplication, Notification
+from .models import FellowshipApplication, DashboardContent, UndergraduateApplication, Notification, NewsletterSubscription
 from .permissions import IsAdmin
 
 User = get_user_model()
@@ -91,6 +92,18 @@ class NotificationViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         # Users only see their own notifications
         return Notification.objects.filter(user=self.request.user).order_by("-created_at")
+
+
+class NewsletterSubscriptionViewSet(viewsets.ModelViewSet):
+    queryset = NewsletterSubscription.objects.all()
+    serializer_class = NewsletterSubscriptionSerializer
+
+    def get_permissions(self):
+        if self.action == "create":
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [IsAdmin]
+        return [permission() for permission in permission_classes]
 
 # Login API
 class LoginView(APIView):

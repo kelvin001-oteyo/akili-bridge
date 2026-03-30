@@ -112,11 +112,33 @@
 
 .card li span {
   font-weight: 600;
-  color: #667eea;
-  background: white;
+  font-size: 0.875rem;
+}
+
+.application-status {
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
-  font-size: 0.875rem;
+  text-transform: capitalize;
+}
+
+.application-status.status-pending {
+  color: #b45309;
+  background: #fef3c7;
+}
+
+.application-status.status-reviewed {
+  color: #1d4ed8;
+  background: #dbeafe;
+}
+
+.application-status.status-accepted {
+  color: #15803d;
+  background: #dcfce7;
+}
+
+.application-status.status-rejected {
+  color: #b91c1c;
+  background: #fee2e2;
 }
 
 /* Badge for notifications count */
@@ -132,7 +154,7 @@
 /* Notification items */
 .notification-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.75rem;
   padding: 0.75rem;
   margin-bottom: 0.5rem;
@@ -148,7 +170,8 @@
 
 .notification-dot {
   color: #667eea;
-  font-size: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.2;
 }
 
 .notification-item p {
@@ -156,11 +179,64 @@
   flex: 1;
 }
 
-/* News indicator */
-.news-indicator {
-  margin-top: 1rem;
-  text-align: center;
-  font-size: 2rem;
+.news-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.news-item {
+  padding: 1rem;
+  border-radius: 14px;
+  background: #f8f9fa;
+  border: 1px solid #e5e7eb;
+}
+
+.news-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.6rem;
+}
+
+.news-category {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.28rem 0.72rem;
+  border-radius: 999px;
+  background: #e0e7ff;
+  color: #4338ca;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.news-date {
+  color: #6b7280;
+  font-size: 0.8rem;
+}
+
+.news-item h3 {
+  margin: 0 0 0.45rem;
+  color: #1f2937;
+  font-size: 1rem;
+}
+
+.news-item p {
+  margin: 0 0 0.7rem;
+  color: #4b5563;
+  font-size: 0.93rem;
+  line-height: 1.5;
+}
+
+.news-link {
+  color: #5b21b6;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.news-link:hover {
+  text-decoration: underline;
 }
 
 /* Floating action button */

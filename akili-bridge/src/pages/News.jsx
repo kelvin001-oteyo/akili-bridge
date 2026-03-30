@@ -10,6 +10,7 @@ export default function WhatsNew() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [subscribed, setSubscribed] = useState(false);
+  const [subscriptionError, setSubscriptionError] = useState("");
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -72,13 +73,40 @@ useEffect(() => {
     setFilteredPosts(filtered);
   }, [searchTerm, posts]);
 
-  const handleSubscribe = (e) => {
+  const handleSubscribe = async (e) => {
     e.preventDefault();
+    setSubscriptionError("");
+
     if (formData.email) {
-      setSubscribed(true);
-      setTimeout(() => setSubscribed(false), 5000);
-      setFormData({ firstName: "", lastName: "", email: "", role: "Fellow" });
+      try {
+        const res = await apiFetch("/api/fellowship/newsletter-subscriptions/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            first_name: formData.firstName,
+            last_name: formData.lastName,
+            email: formData.email,
+            role: formData.role || "Subscriber",
+            source: "news",
+          }),
+        });
+
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => null);
+          const emailErrors = Array.isArray(errorData?.email) ? errorData.email.join(", ") : null;
+          throw new Error(emailErrors || errorData?.detail || "Subscription failed.");
+        }
+
+        setSubscribed(true);
+        setTimeout(() => setSubscribed(false), 5000);
+        setFormData({ firstName: "", lastName: "", email: "", role: "Fellow" });
+      } catch (error) {
+        setSubscriptionError(error.message || "Subscription failed.");
+      }
+      return;
     }
+
+    setSubscriptionError("Email is required.");
   };
 
   const handleInputChange = (e) => {
@@ -335,6 +363,23 @@ useEffect(() => {
                   exit={{ opacity: 0, y: -10 }}
                 >
                   ✓ Successfully subscribed! Check your email for confirmation.
+                </motion.div>
+              )}
+            </AnimatePresence>
+            <AnimatePresence>
+              {subscriptionError && (
+                <motion.div
+                  className="success-message"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  style={{
+                    background: "rgba(231, 76, 60, 0.2)",
+                    borderColor: "#e74c3c",
+                    color: "#ffb3b3",
+                  }}
+                >
+                  {subscriptionError}
                 </motion.div>
               )}
             </AnimatePresence>

@@ -157,3 +157,28 @@ class Notification(models.Model):
     def __str__(self):
         return f"Notification for {self.user.username} - {self.message[:30]}"
 
+
+class NewsletterSubscription(models.Model):
+    ROLE_CHOICES = [
+        ("Fellow", "Fellow"),
+        ("Mentor", "Mentor"),
+        ("Researcher", "Researcher"),
+        ("Partner", "Partner"),
+        ("Subscriber", "Subscriber"),
+    ]
+
+    first_name = models.CharField(max_length=100, blank=True)
+    last_name = models.CharField(max_length=100, blank=True)
+    email = models.EmailField(unique=True)
+    role = models.CharField(max_length=50, choices=ROLE_CHOICES, default="Subscriber")
+    source = models.CharField(max_length=100, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        name = f"{self.first_name} {self.last_name}".strip()
+        return name or self.email
+

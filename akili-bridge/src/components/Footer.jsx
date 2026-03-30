@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { apiFetch } from "../utils/api";
 import {
   FacebookIcon,
   InstagramIcon,
@@ -17,14 +18,40 @@ export default function Footer() {
   const isInView = useInView(footerRef, { once: true, amount: 0.2 });
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [subscribeError, setSubscribeError] = useState("");
 
-  const handleSubscribe = (e) => {
+  const handleSubscribe = async (e) => {
     e.preventDefault();
+    setSubscribeError("");
+
     if (email && email.includes("@")) {
-      setSubscribed(true);
-      setTimeout(() => setSubscribed(false), 3000);
-      setEmail("");
+      try {
+        const res = await apiFetch("/api/fellowship/newsletter-subscriptions/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+            role: "Subscriber",
+            source: "footer",
+          }),
+        });
+
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => null);
+          const emailErrors = Array.isArray(errorData?.email) ? errorData.email.join(", ") : null;
+          throw new Error(emailErrors || errorData?.detail || "Subscription failed.");
+        }
+
+        setSubscribed(true);
+        setTimeout(() => setSubscribed(false), 3000);
+        setEmail("");
+      } catch (error) {
+        setSubscribeError(error.message || "Subscription failed.");
+      }
+      return;
     }
+
+    setSubscribeError("Enter a valid email address.");
   };
 
   const containerVariants = {
@@ -251,6 +278,15 @@ export default function Footer() {
               style={{ marginTop: "10px", color: "#ffd966", fontSize: "0.85rem" }}
             >
               Thanks for subscribing.
+            </motion.p>
+          )}
+          {subscribeError && (
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              style={{ marginTop: "10px", color: "#ffb3b3", fontSize: "0.85rem" }}
+            >
+              {subscribeError}
             </motion.p>
           )}
         </motion.div>

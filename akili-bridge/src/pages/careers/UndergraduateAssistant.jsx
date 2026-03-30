@@ -70,6 +70,25 @@ export default function CareersApplication() {
 
     if (res.ok) {
       setSubmitted(true);
+      setFormData({
+        fullName: "",
+        email: "",
+        phone: "",
+        university: "",
+        degree: "",
+        year: "",
+        country: "",
+        gpa: "",
+        availability: "",
+        timezone: "",
+        lab1: "",
+        lab2: "",
+        portfolio: "",
+        cv: null,
+        transcript: null,
+        sop: null,
+        sampleWork: null,
+      });
       alert("Application submitted successfully!");
     } else {
       const errorData = await res.json().catch(() => null);

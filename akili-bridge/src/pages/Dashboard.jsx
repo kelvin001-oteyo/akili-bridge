@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import { apiFetch } from "../utils/api";
 import "./Dashboard.css";
 
-// Animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -11,19 +11,6 @@ const containerVariants = {
     transition: {
       staggerChildren: 0.1,
       delayChildren: 0.2,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 12,
     },
   },
 };
@@ -42,7 +29,7 @@ const cardVariants = {
     },
   },
   hover: {
-    scale: 1.05,
+    scale: 1.03,
     y: -5,
     transition: {
       type: "spring",
@@ -54,45 +41,22 @@ const cardVariants = {
 
 const listItemVariants = {
   hidden: { opacity: 0, x: -20 },
-  visible: (i) => ({
+  visible: (index) => ({
     opacity: 1,
     x: 0,
     transition: {
-      delay: i * 0.05,
+      delay: index * 0.06,
       type: "spring",
-      stiffness: 200,
+      stiffness: 180,
       damping: 20,
     },
   }),
-  exit: {
-    opacity: 0,
-    x: 20,
-    transition: { duration: 0.2 },
-  },
-};
-
-const notificationVariants = {
-  hidden: { opacity: 0, x: -30 },
-  visible: (i) => ({
-    opacity: 1,
-    x: 0,
-    transition: {
-      delay: i * 0.08,
-      type: "spring",
-      stiffness: 200,
-      damping: 15,
-    },
-  }),
-  hover: {
-    scale: 1.02,
-    x: 5,
-    transition: { duration: 0.2 },
-  },
 };
 
 export default function Dashboard() {
   const [notifications, setNotifications] = useState([]);
   const [applications, setApplications] = useState([]);
+  const [posts, setPosts] = useState([]);
   const [user, setUser] = useState(null);
   const [fetchError, setFetchError] = useState("");
 
@@ -101,9 +65,10 @@ export default function Dashboard() {
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
+  }, []);
 
+  useEffect(() => {
     const token = localStorage.getItem("access") || localStorage.getItem("token");
-    if (!token) return;
 
     const parseJsonSafely = async (response, label) => {
       const contentType = response.headers.get("content-type") || "";
@@ -124,18 +89,31 @@ export default function Dashboard() {
       try {
         setFetchError("");
 
-        const [notificationsResponse, applicationsResponse] = await Promise.all([
-          apiFetch("/api/fellowship/notifications/"),
-          apiFetch("/api/fellowship/applications/"),
-        ]);
+        const requests = [apiFetch("/api/blog/")];
 
-        const [notificationsData, applicationsData] = await Promise.all([
-          parseJsonSafely(notificationsResponse, "Notifications"),
-          parseJsonSafely(applicationsResponse, "Applications"),
-        ]);
+        if (token) {
+          requests.push(apiFetch("/api/fellowship/notifications/"));
+          requests.push(apiFetch("/api/fellowship/applications/"));
+        }
 
-        setNotifications(notificationsData);
-        setApplications(applicationsData);
+        const responses = await Promise.all(requests);
+        const [postsResponse, notificationsResponse, applicationsResponse] = responses;
+
+        const postsData = await parseJsonSafely(postsResponse, "Blog posts");
+        setPosts(postsData.slice(0, 3));
+
+        if (token) {
+          const [notificationsData, applicationsData] = await Promise.all([
+            parseJsonSafely(notificationsResponse, "Notifications"),
+            parseJsonSafely(applicationsResponse, "Applications"),
+          ]);
+
+          setNotifications(notificationsData);
+          setApplications(applicationsData);
+        } else {
+          setNotifications([]);
+          setApplications([]);
+        }
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
         if (
@@ -155,7 +133,7 @@ export default function Dashboard() {
     };
 
     fetchDashboardData();
-  }, []);
+  }, [user]);
 
   return (
     <motion.div
@@ -164,17 +142,11 @@ export default function Dashboard() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      {/* Welcome Banner with enhanced animation */}
       <motion.div
         className="welcome-banner"
-        initial={{ opacity: 0, y: -50 }}
+        initial={{ opacity: 0, y: -40 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{
-          type: "spring",
-          stiffness: 100,
-          damping: 12,
-          duration: 0.8,
-        }}
+        transition={{ type: "spring", stiffness: 100, damping: 12, duration: 0.8 }}
       >
         <motion.h1
           initial={{ opacity: 0, x: -20 }}
@@ -183,273 +155,159 @@ export default function Dashboard() {
         >
           {user ? `Welcome, ${user.username}` : "Welcome to Akili Bridge Dashboard"}
         </motion.h1>
-        
+
         <motion.p
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3, duration: 0.5 }}
         >
           {user
-            ? "Here is your personalized dashboard."
-            : "Explore demo content below. Log in to see your applications and notifications."}
+            ? "Track your applications, read the latest updates, and stay on top of notifications."
+            : "Read the latest updates and log in to view your applications and notifications."}
         </motion.p>
-        
+
         <AnimatePresence>
-          {fetchError && user && (
+          {fetchError && (
             <motion.p
               className="error-message"
-              initial={{ opacity: 0, scale: 0.9, y: -10 }}
+              initial={{ opacity: 0, scale: 0.95, y: -10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: -10 }}
+              exit={{ opacity: 0, scale: 0.95, y: -10 }}
               transition={{ duration: 0.3 }}
             >
-              ⚠️ {fetchError}
+              {fetchError}
             </motion.p>
           )}
         </AnimatePresence>
       </motion.div>
 
-      {/* Cards Grid with staggered animation */}
       <motion.div
         className="cards-grid"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        {/* Applications Card */}
-        <motion.div
-          className="card"
-          variants={cardVariants}
-          whileHover="hover"
-        >
-          <motion.h2
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.1 }}
-          >
-            Applications
-          </motion.h2>
-          
+        <motion.div className="card" variants={cardVariants} whileHover="hover">
+          <h2>Applications</h2>
+
           {user ? (
             <AnimatePresence mode="wait">
               {applications.length > 0 ? (
-                <motion.ul
-                  initial="hidden"
-                  animate="visible"
-                  variants={containerVariants}
-                >
-                  <AnimatePresence>
-                    {applications.map((app, index) => (
-                      <motion.li
-                        key={app.id}
-                        custom={index}
-                        variants={listItemVariants}
-                        initial="hidden"
-                        animate="visible"
-                        exit="exit"
-                        whileHover={{ scale: 1.02, x: 5 }}
-                        transition={{ type: "spring", stiffness: 300 }}
-                      >
-                        {app.full_name} - 
-                        <motion.span
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 0.1 }}
-                          style={{ display: "inline-block" }}
-                        >
-                          {app.status}
-                        </motion.span>
-                      </motion.li>
-                    ))}
-                  </AnimatePresence>
+                <motion.ul initial="hidden" animate="visible" variants={containerVariants}>
+                  {applications.map((application, index) => (
+                    <motion.li
+                      key={application.id}
+                      custom={index}
+                      variants={listItemVariants}
+                      initial="hidden"
+                      animate="visible"
+                    >
+                      {application.full_name}
+                      <span className={`application-status status-${application.status}`}>
+                        {application.status}
+                      </span>
+                    </motion.li>
+                  ))}
                 </motion.ul>
               ) : (
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                >
-                  No applications found.
+                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                  No applications found yet.
                 </motion.p>
               )}
             </AnimatePresence>
           ) : (
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-            >
-              Demo: Track your fellowship or undergraduate applications here.
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+              Log in to view your submitted fellowship or undergraduate applications.
             </motion.p>
           )}
         </motion.div>
 
-        {/* Latest News Card */}
-        <motion.div
-          className="card"
-          variants={cardVariants}
-          whileHover="hover"
-        >
-          <motion.h2
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.15 }}
-          >
-            Latest News
-          </motion.h2>
-          
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-          >
-            {user
-              ? "Stay updated with announcements and events tailored for you."
-              : "Demo: Latest announcements and events will appear here."}
-          </motion.p>
-          
-          {/* Optional: Add a pulsing animation for new content indicator */}
-          <motion.div
-            className="news-indicator"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{
-              type: "spring",
-              stiffness: 200,
-              damping: 10,
-              delay: 0.4,
-            }}
-          >
-            <motion.span
-              animate={{
-                scale: [1, 1.2, 1],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                repeatType: "reverse",
-              }}
-            >
-              📰
-            </motion.span>
-          </motion.div>
-        </motion.div>
+        <motion.div className="card" variants={cardVariants} whileHover="hover">
+          <h2>Latest News</h2>
 
-        {/* Notifications Card */}
-        <motion.div
-          className="card"
-          variants={cardVariants}
-          whileHover="hover"
-        >
-          <motion.h2
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-          >
-            Notifications
-            {notifications.length > 0 && user && (
-              <motion.span
-                className="badge"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ type: "spring", stiffness: 300, delay: 0.3 }}
-              >
-                {notifications.length}
-              </motion.span>
-            )}
-          </motion.h2>
-          
-          {user ? (
-            <AnimatePresence mode="wait">
-              {notifications.length > 0 ? (
-                <motion.div
-                  variants={containerVariants}
+          {posts.length > 0 ? (
+            <div className="news-list">
+              {posts.map((post, index) => (
+                <motion.article
+                  key={post.id}
+                  className="news-item"
+                  custom={index}
+                  variants={listItemVariants}
                   initial="hidden"
                   animate="visible"
                 >
-                  {notifications.map((notification, index) => (
-                    <motion.div
-                      key={notification.id}
-                      custom={index}
-                      variants={notificationVariants}
-                      whileHover="hover"
-                      className="notification-item"
-                    >
-                      <motion.div
-                        className="notification-dot"
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: index * 0.05 }}
-                      >
-                        <motion.span
-                          animate={{
-                            scale: [1, 1.2, 1],
-                          }}
-                          transition={{
-                            duration: 1,
-                            repeat: Infinity,
-                            repeatDelay: 3,
-                          }}
-                        >
-                          ●
-                        </motion.span>
-                      </motion.div>
-                      <motion.p
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.05 + 0.1 }}
-                      >
-                        {notification.message}
-                      </motion.p>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              ) : (
-                <motion.p
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.2 }}
-                >
-                  No notifications yet.
-                </motion.p>
-              )}
-            </AnimatePresence>
+                  <div className="news-item-header">
+                    <span className="news-category">{post.category || "Announcement"}</span>
+                    <span className="news-date">
+                      {new Date(post.created_at).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <h3>{post.title}</h3>
+                  <p>
+                    {post.excerpt ||
+                      `${post.body?.slice(0, 120) || ""}${post.body?.length > 120 ? "..." : ""}`}
+                  </p>
+                  <Link to={`/blog/${post.id}`} className="news-link">
+                    Read article
+                  </Link>
+                </motion.article>
+              ))}
+            </div>
           ) : (
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-            >
-              Demo: Notifications will appear here once you log in.
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+              No blog posts yet. Anything published from Django admin will appear here automatically.
+            </motion.p>
+          )}
+        </motion.div>
+
+        <motion.div className="card" variants={cardVariants} whileHover="hover">
+          <h2>
+            Notifications
+            {notifications.length > 0 && user && <span className="badge">{notifications.length}</span>}
+          </h2>
+
+          {user ? (
+            notifications.length > 0 ? (
+              <div>
+                {notifications.map((notification, index) => (
+                  <motion.div
+                    key={notification.id}
+                    className="notification-item"
+                    custom={index}
+                    variants={listItemVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    <span className="notification-dot">•</span>
+                    <p>{notification.message}</p>
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                No notifications yet.
+              </motion.p>
+            )
+          ) : (
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+              Log in to see your notifications here.
             </motion.p>
           )}
         </motion.div>
       </motion.div>
 
-      {/* Floating action button animation (optional) */}
       <motion.button
         className="floating-btn"
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{
-          type: "spring",
-          stiffness: 200,
-          damping: 15,
-          delay: 1,
-        }}
+        transition={{ type: "spring", stiffness: 200, damping: 15, delay: 1 }}
         whileHover={{ scale: 1.1, rotate: 90 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       >
         <motion.span
-          animate={{
-            y: [0, -3, 0],
-          }}
-          transition={{
-            duration: 1.5,
-            repeat: Infinity,
-            repeatType: "reverse",
-          }}
+          animate={{ y: [0, -3, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse" }}
         >
           ↑
         </motion.span>

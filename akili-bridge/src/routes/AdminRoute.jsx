@@ -2,13 +2,16 @@ import { Navigate } from "react-router-dom";
 
 export default function AdminRoute({ children }) {
   const token = localStorage.getItem("token");
+  const access = localStorage.getItem("access");
   const user = JSON.parse(localStorage.getItem("user"));
 
-  if (!token || !user) {
-    // Not logged in → redirect to login
+  if ((!token && !access) || !user) {
     return <Navigate to="/login" replace />;
   }
 
-  // ✅ Any logged-in user can access
+  if (!user.is_admin) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
   return children;
 }

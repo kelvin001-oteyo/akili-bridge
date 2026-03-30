@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import FellowshipApplication, DashboardContent, UndergraduateApplication, Notification
+from .models import FellowshipApplication, DashboardContent, UndergraduateApplication, Notification, NewsletterSubscription
 
 User = get_user_model()
 
@@ -103,3 +103,18 @@ class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
         fields = ["id", "user", "message", "created_at", "is_read"]
+
+
+class NewsletterSubscriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NewsletterSubscription
+        fields = [
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+            "role",
+            "source",
+            "created_at",
+            "updated_at",
+        ]

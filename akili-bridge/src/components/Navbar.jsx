@@ -32,6 +32,8 @@ export default function Navbar() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
     localStorage.removeItem("user");
     navigate("/auth"); // back to register/login page
   };
@@ -213,7 +215,9 @@ export default function Navbar() {
               },
               { name: "What's New", path: "/news", hasDropdown: false },
               { name: "Dashboard", path: "/dashboard", hasDropdown: false },
-              { name: "Admin Dashboard", path: "/admin-dashboard", hasDropdown: false }
+              ...(user?.is_admin
+                ? [{ name: "Admin Dashboard", path: "/admin-dashboard", hasDropdown: false }]
+                : [])
             ].map((item, index) => (
               <motion.li
                 key={item.name}
@@ -392,7 +396,7 @@ export default function Navbar() {
                   { name: "Careers Application Form", path: "/careers/application" },
                   { name: "What's New", path: "/news" },
                   { name: "Dashboard", path: "/dashboard" },
-                  { name: "Admin Dashboard", path: "/admin-dashboard" }
+                  ...(user?.is_admin ? [{ name: "Admin Dashboard", path: "/admin-dashboard" }] : [])
                 ].map((item, i) => (
                   <motion.li
                     key={item.name}
