@@ -61,6 +61,12 @@ const TAB_CONFIG = {
   },
 };
 
+const tableRowVariants = {
+  hidden: { opacity: 0, x: -20, scale: 0.98 },
+  visible: { opacity: 1, x: 0, scale: 1, transition: { type: "spring", stiffness: 220, damping: 20 } },
+  exit: { opacity: 0, x: 20, scale: 0.98, transition: { duration: 0.2 } },
+};
+
 export default function AdminDashboard() {
   const [datasets, setDatasets] = useState({
     fellowship: [],
@@ -435,10 +441,13 @@ export default function AdminDashboard() {
                       {paginatedRecords.map((record, index) => (
                         <motion.tr
                           key={`${activeTab}-${record.id}`}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: 20 }}
-                          transition={{ delay: index * 0.04 }}
+                          layout
+                          variants={tableRowVariants}
+                          initial="hidden"
+                          animate="visible"
+                          exit="exit"
+                          whileHover={{ y: -3, boxShadow: "0 12px 30px rgba(102, 126, 234, 0.12)" }}
+                          transition={{ delay: index * 0.03 }}
                         >
                           {renderTableCells({
                             activeTab,

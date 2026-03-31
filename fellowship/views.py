@@ -42,7 +42,13 @@ class RegisterView(generics.CreateAPIView):
 class FellowshipApplicationViewSet(viewsets.ModelViewSet):
     queryset = FellowshipApplication.objects.all().order_by("-created_at")
     serializer_class = FellowshipApplicationSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_permissions(self):
+        if self.action == "create":
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+        return [permission() for permission in permission_classes]
 
     def perform_create(self, serializer):
         if self.request.user.is_authenticated:

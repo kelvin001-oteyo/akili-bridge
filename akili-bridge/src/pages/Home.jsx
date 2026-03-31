@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { apiFetch } from "../utils/api";
 import "./Home.css";
 
 export default function Home() {
@@ -16,6 +17,46 @@ export default function Home() {
     damping: 30,
     restDelta: 0.001
   });
+
+  const [subscribeEmail, setSubscribeEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
+  const [subscribeError, setSubscribeError] = useState("");
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    setSubscribeError("");
+
+    if (!subscribeEmail || !subscribeEmail.includes("@")) {
+      setSubscribeError("Enter a valid email address.");
+      return;
+    }
+
+    try {
+      const res = await apiFetch("/api/fellowship/newsletter-subscriptions/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: subscribeEmail,
+          role: "Subscriber",
+          source: "homepage",
+        }),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => null);
+        const emailErrors = Array.isArray(errorData?.email) ? errorData.email.join(", ") : null;
+        throw new Error(emailErrors || errorData?.detail || "Subscription failed.");
+      }
+
+      setSubscribed(true);
+      setSubscribeEmail("");
+      setTimeout(() => setSubscribed(false), 3000);
+    } catch (error) {
+      setSubscribeError(error.message || "Subscription failed.");
+    }
+  };
 
   const heroScale = useTransform(springScroll, [0, 0.5], [1, 0.95]);
   const heroOpacity = useTransform(springScroll, [0, 0.3], [1, 0.7]);
@@ -161,7 +202,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 }}
-              onClick={() => navigate("/careers/application")}
+              onClick={() => navigate("/careers/undergraduate")}
             >
               <span>Learn More</span>
               <motion.span
@@ -342,6 +383,82 @@ export default function Home() {
               </motion.span>
             </motion.button>
           </motion.div>
+        </div>
+      </motion.section>
+
+      <motion.section
+        className="home-section subscribe-section"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+        style={{ backgroundColor: "#152238", color: "#ffffff" }}
+      >
+        <div className="section-content" style={{ maxWidth: "960px", margin: "0 auto", textAlign: "center" }}>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            style={{ marginBottom: "1rem" }}
+          >
+            Stay In The Loop
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            style={{ maxWidth: "720px", margin: "0 auto 1.5rem", lineHeight: 1.8 }}
+          >
+            Subscribe to Akili Bridge announcements and receive the latest fellowship,
+            events, and research updates straight to your inbox.
+          </motion.p>
+          <motion.form
+            onSubmit={handleSubscribe}
+            style={{ display: "flex", flexWrap: "wrap", gap: "12px", justifyContent: "center", margin: "0 auto" }}
+          >
+            <motion.input
+              type="email"
+              placeholder="Enter your email address"
+              value={subscribeEmail}
+              onChange={(e) => setSubscribeEmail(e.target.value)}
+              style={{
+                flex: "1 1 280px",
+                minWidth: "260px",
+                padding: "14px 18px",
+                borderRadius: "8px",
+                border: "1px solid rgba(255,255,255,0.25)",
+                background: "rgba(255,255,255,0.08)",
+                color: "#ffffff",
+                outline: "none",
+              }}
+            />
+            <motion.button
+              type="submit"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              style={{
+                padding: "14px 26px",
+                borderRadius: "8px",
+                border: "none",
+                background: "#ffd966",
+                color: "#1e2a47",
+                fontWeight: "700",
+                cursor: "pointer",
+                minWidth: "160px",
+              }}
+            >
+              {subscribed ? "Subscribed ✓" : "Subscribe"}
+            </motion.button>
+          </motion.form>
+          {subscribeError && (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              style={{ color: "#ff7a7a", marginTop: "1rem" }}
+            >
+              {subscribeError}
+            </motion.p>
+          )}
         </div>
       </motion.section>
 

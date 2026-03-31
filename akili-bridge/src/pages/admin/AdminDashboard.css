@@ -382,7 +382,12 @@
 
 .premium-table tbody tr {
   border-bottom: 1px solid #e5e7eb;
-  transition: all 0.3s ease;
+  transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.premium-table tbody tr:hover {
+  background: rgba(102, 126, 234, 0.05);
+  transform: translateY(-1px);
 }
 
 .premium-table tbody td {

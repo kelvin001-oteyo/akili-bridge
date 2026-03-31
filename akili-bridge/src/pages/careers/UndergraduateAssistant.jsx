@@ -357,7 +357,7 @@ export default function CareersApplication() {
                 <label className="form-label">Portfolio / GitHub Link</label>
                 <input
                   name="portfolio"
-                  type="text"
+                  type="url"
                   placeholder="https://github.com/yourusername"
                   value={formData.portfolio}
                   onChange={handleChange}
