@@ -390,3 +390,180 @@ html {
   position: relative;
   z-index: 1;
 }
+
+
+/* Add these styles to your existing Dashboard.css */
+
+.applications-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.application-item {
+  padding: 15px;
+  border-bottom: 1px solid #e2e8f0;
+  transition: background-color 0.2s;
+}
+
+.application-item:hover {
+  background-color: #f7fafc;
+}
+
+.application-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.application-name {
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 16px;
+}
+
+.application-details {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.application-discipline {
+  font-size: 14px;
+  color: #718096;
+}
+
+.application-status {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.status-pending {
+  background-color: #fed7aa;
+  color: #9c4221;
+}
+
+.status-reviewed {
+  background-color: #bee3f8;
+  color: #2c5282;
+}
+
+.status-accepted {
+  background-color: #c6f6d5;
+  color: #22543d;
+}
+
+.status-rejected {
+  background-color: #fed7d7;
+  color: #9b2c2c;
+}
+
+.application-date {
+  font-size: 12px;
+  color: #a0aec0;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.apply-link {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 8px 20px;
+  background-color: #4299e1;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.apply-link:hover {
+  background-color: #3182ce;
+}
+
+.login-prompt {
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.login-btn {
+  margin-top: 15px;
+  padding: 8px 20px;
+  background-color: #4299e1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.login-btn:hover {
+  background-color: #3182ce;
+}
+
+.error-action-btn {
+  margin-left: 10px;
+  padding: 5px 12px;
+  background-color: #e53e3e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.error-action-btn:hover {
+  background-color: #c53030;
+}
+
+.loading-spinner {
+  text-align: center;
+  padding: 30px 20px;
+  color: #718096;
+}
+
+.notification-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.notification-dot {
+  color: #4299e1;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.notification-time {
+  font-size: 11px;
+  color: #a0aec0;
+  margin-top: 4px;
+  display: block;
+}
+
+.badge {
+  background-color: #4299e1;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.news-link {
+  color: #4299e1;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.news-link:hover {
+  text-decoration: underline;
+}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { apiFetch } from "../utils/api";
 import "./Dashboard.css";
 
@@ -59,6 +59,8 @@ export default function Dashboard() {
   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState(null);
   const [fetchError, setFetchError] = useState("");
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -69,7 +71,8 @@ export default function Dashboard() {
 
   useEffect(() => {
     const token = localStorage.getItem("access") || localStorage.getItem("token");
-
+    
+    // If no token, we still load public content (blog posts)
     const parseJsonSafely = async (response, label) => {
       const contentType = response.headers.get("content-type") || "";
       const data = contentType.includes("application/json")
@@ -77,6 +80,16 @@ export default function Dashboard() {
         : null;
 
       if (!response.ok) {
+        // Handle 401 Unauthorized - token expired
+        if (response.status === 401) {
+          localStorage.removeItem("access");
+          localStorage.removeItem("token");
+          localStorage.removeItem("refresh");
+          localStorage.removeItem("user");
+          navigate("/auth");
+          throw new Error("Session expired. Please login again.");
+        }
+        
         const message =
           data?.detail || data?.error || `${label} request failed (${response.status})`;
         throw new Error(message);
@@ -100,7 +113,8 @@ export default function Dashboard() {
     const fetchDashboardData = async () => {
       try {
         setFetchError("");
-
+        setLoading(true);
+        
         const requests = [apiFetch("/api/blog/")];
 
         if (token) {
@@ -122,6 +136,9 @@ export default function Dashboard() {
 
           setNotifications(notificationsData);
           setApplications(applicationsData);
+          
+          // Log for debugging (remove in production)
+          console.log(`Found ${applicationsData.length} applications for ${user?.username}`);
         } else {
           setNotifications([]);
           setApplications([]);
@@ -133,19 +150,38 @@ export default function Dashboard() {
           error.message.toLowerCase().includes("authentication") ||
           error.message.toLowerCase().includes("session expired")
         ) {
-          localStorage.removeItem("access");
-          localStorage.removeItem("token");
-          localStorage.removeItem("refresh");
-          localStorage.removeItem("user");
-          window.location.href = "/login";
+          // Don't redirect here, let the component handle it
+          setFetchError("Session expired. Please login again.");
         } else {
           setFetchError(error.message || "Unable to load dashboard data.");
         }
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchDashboardData();
-  }, [user]);
+  }, [user, navigate]);
+
+  // Helper function to get status color class
+  const getStatusClass = (status) => {
+    switch(status) {
+      case 'accepted':
+        return 'status-accepted';
+      case 'rejected':
+        return 'status-rejected';
+      case 'reviewed':
+        return 'status-reviewed';
+      default:
+        return 'status-pending';
+    }
+  };
+
+  // Helper function to format date
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
 
   return (
     <motion.div
@@ -174,8 +210,8 @@ export default function Dashboard() {
           transition={{ delay: 0.3, duration: 0.5 }}
         >
           {user
-            ? "Track your applications, read the latest updates, and stay on top of notifications."
-            : "Read the latest updates and log in to view your applications and notifications."}
+            ? `Track your applications, read the latest updates, and stay on top of notifications.`
+            : `Read the latest updates and log in to view your applications and notifications.`}
         </motion.p>
 
         <AnimatePresence>
@@ -188,6 +224,14 @@ export default function Dashboard() {
               transition={{ duration: 0.3 }}
             >
               {fetchError}
+              {fetchError.includes("Session expired") && (
+                <button 
+                  onClick={() => navigate("/auth")}
+                  className="error-action-btn"
+                >
+                  Go to Login
+                </button>
+              )}
             </motion.p>
           )}
         </AnimatePresence>
@@ -200,12 +244,30 @@ export default function Dashboard() {
         animate="visible"
       >
         <motion.div className="card" variants={cardVariants} whileHover="hover">
-          <h2>Applications</h2>
+          <h2>
+            My Applications
+            {applications.length > 0 && user && (
+              <span className="badge">{applications.length}</span>
+            )}
+          </h2>
 
           {user ? (
             <AnimatePresence mode="wait">
-              {applications.length > 0 ? (
-                <motion.ul initial="hidden" animate="visible" variants={containerVariants}>
+              {loading ? (
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="loading-spinner"
+                >
+                  Loading your applications...
+                </motion.div>
+              ) : applications.length > 0 ? (
+                <motion.ul 
+                  initial="hidden" 
+                  animate="visible" 
+                  variants={containerVariants}
+                  className="applications-list"
+                >
                   {applications.map((application, index) => (
                     <motion.li
                       key={application.id}
@@ -213,24 +275,54 @@ export default function Dashboard() {
                       variants={listItemVariants}
                       initial="hidden"
                       animate="visible"
+                      className="application-item"
                     >
-                      {application.full_name}
-                      <span className={`application-status status-${application.status}`}>
-                        {application.status}
-                      </span>
+                      <div className="application-info">
+                        <div className="application-name">
+                          {application.full_name || application.applicant?.username || "Application"}
+                        </div>
+                        <div className="application-details">
+                          <span className="application-discipline">
+                            {application.discipline || "Fellowship"}
+                          </span>
+                          <span className={`application-status ${getStatusClass(application.status)}`}>
+                            {application.status?.toUpperCase() || "PENDING"}
+                          </span>
+                        </div>
+                        <div className="application-date">
+                          Submitted: {formatDate(application.created_at)}
+                        </div>
+                      </div>
                     </motion.li>
                   ))}
                 </motion.ul>
               ) : (
-                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                  No applications found yet.
-                </motion.p>
+                <motion.div 
+                  initial={{ opacity: 0 }} 
+                  animate={{ opacity: 1 }}
+                  className="empty-state"
+                >
+                  <p>You haven't submitted any applications yet.</p>
+                  <Link to="/apply" className="apply-link">
+                    Start Your Application →
+                  </Link>
+                </motion.div>
               )}
             </AnimatePresence>
           ) : (
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              Log in to view your submitted fellowship or undergraduate applications.
-            </motion.p>
+            <motion.div 
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }}
+              className="login-prompt"
+            >
+              <p>Log in to view your submitted fellowship or undergraduate applications.</p>
+              <button 
+                onClick={() => navigate("/auth")} 
+                className="login-btn"
+              >
+                Login
+              </button>
+            </motion.div>
           )}
         </motion.div>
 
@@ -260,14 +352,14 @@ export default function Dashboard() {
                       `${post.body?.slice(0, 120) || ""}${post.body?.length > 120 ? "..." : ""}`}
                   </p>
                   <Link to={`/blog/${post.id}`} className="news-link">
-                    Read article
+                    Read article →
                   </Link>
                 </motion.article>
               ))}
             </div>
           ) : (
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              No blog posts yet. Anything published from Django admin will appear here automatically.
+              No blog posts yet. Check back soon for updates!
             </motion.p>
           )}
         </motion.div>
@@ -275,31 +367,44 @@ export default function Dashboard() {
         <motion.div className="card" variants={cardVariants} whileHover="hover">
           <h2>
             Notifications
-            {notifications.length > 0 && user && <span className="badge">{notifications.length}</span>}
+            {notifications.length > 0 && user && (
+              <span className="badge">{notifications.length}</span>
+            )}
           </h2>
 
           {user ? (
-            notifications.length > 0 ? (
-              <div>
-                {notifications.map((notification, index) => (
-                  <motion.div
-                    key={notification.id}
-                    className="notification-item"
-                    custom={index}
-                    variants={listItemVariants}
-                    initial="hidden"
-                    animate="visible"
-                  >
-                    <span className="notification-dot">•</span>
-                    <p>{notification.message}</p>
-                  </motion.div>
-                ))}
-              </div>
-            ) : (
-              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                No notifications yet.
-              </motion.p>
-            )
+            <AnimatePresence mode="wait">
+              {loading ? (
+                <motion.div className="loading-spinner">
+                  Loading notifications...
+                </motion.div>
+              ) : notifications.length > 0 ? (
+                <div className="notifications-list">
+                  {notifications.map((notification, index) => (
+                    <motion.div
+                      key={notification.id}
+                      className="notification-item"
+                      custom={index}
+                      variants={listItemVariants}
+                      initial="hidden"
+                      animate="visible"
+                    >
+                      <span className="notification-dot">•</span>
+                      <div>
+                        <p>{notification.message}</p>
+                        <small className="notification-time">
+                          {formatDate(notification.created_at)}
+                        </small>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              ) : (
+                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                  No notifications yet. We'll notify you when there are updates to your applications.
+                </motion.p>
+              )}
+            </AnimatePresence>
           ) : (
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               Log in to see your notifications here.

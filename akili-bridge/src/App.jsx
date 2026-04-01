@@ -21,9 +21,11 @@ import ForFellows from "./pages/apply/ForFellows";
 import ForMentors from "./pages/apply/ForMentors";
 import UndergraduateAssistant from "./pages/careers/UndergraduateAssistant";
 import CareersApplication from "./pages/careers/CareersApplication";
+import ResetPassword from "./components/ResetPassword";
+import ConfirmEmail from "./components/ConfirmEmail";
 
 // Dashboards
-import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminLayout from "./components/admin/AdminLayout";  // ✅ New wrapper for admin dashboard
 import Dashboard from "./pages/Dashboard";   // ✅ Unified user dashboard
 
 // Auth
@@ -52,6 +54,10 @@ function App() {
         <Route path="/apply/fellows" element={<ForFellows />} />
         <Route path="/apply/mentors" element={<ForMentors />} />
 
+        {/* Password Reset & Email Confirmation Routes */}
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/confirm-email/:token" element={<ConfirmEmail />} />
+
         <Route path="/labs" element={<Labs />} />
 
         <Route path="/careers" element={<Careers />} />
@@ -65,15 +71,15 @@ function App() {
         <Route path="/auth" element={<Auth />} />
         <Route path="/login" element={<Auth />} /> {/* alias */}
 
-        {/* User Dashboard (now public) */}
+        {/* User Dashboard - Shows only user's applications */}
         <Route path="/dashboard" element={<Dashboard />} />
 
-        {/* Admin Dashboard (still protected) */}
+        {/* Admin Dashboard - Hidden/Collapsible by default */}
         <Route
           path="/admin-dashboard"
           element={
             <AdminRoute>
-              <AdminDashboard />
+              <AdminLayout />
             </AdminRoute>
           }
         />

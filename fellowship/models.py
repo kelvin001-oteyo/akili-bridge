@@ -5,7 +5,6 @@ from django.conf import settings
 
 
 
-
 class DashboardContent(models.Model):
     id = models.BigAutoField(primary_key=True)
     title = models.CharField(max_length=200)
@@ -24,6 +23,7 @@ class User(AbstractUser):
     id = models.BigAutoField(primary_key=True)
     is_applicant = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+    email_confirmed = models.BooleanField(default=False)
 
     # Override the groups and user_permissions fields to avoid reverse accessor clashes
     groups = models.ManyToManyField(
@@ -181,4 +181,53 @@ class NewsletterSubscription(models.Model):
     def __str__(self):
         name = f"{self.first_name} {self.last_name}".strip()
         return name or self.email
+
+
+# Add this import at the top with your other imports
+from django.utils import timezone
+import uuid
+
+# Add these models at the end of your models.py file
+
+class PasswordResetToken(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField()
+    
+    def is_valid(self):
+        return timezone.now() <= self.expires_at
+    
+    def __str__(self):
+        return f"Reset token for {self.user.username}"
+    
+    class Meta:
+        indexes = [
+            models.Index(fields=['token']),
+            models.Index(fields=['expires_at']),
+        ]
+
+
+class EmailConfirmationToken(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField()
+    is_used = models.BooleanField(default=False)
+    
+    def is_valid(self):
+        return not self.is_used and timezone.now() <= self.expires_at
+    
+    def __str__(self):
+        return f"Confirmation token for {self.user.username}"
+    
+    class Meta:
+        indexes = [
+            models.Index(fields=['token']),
+            models.Index(fields=['expires_at']),
+        ]
+
+
+# Add email_confirmed field to User model
+# You'll need to add this field to your User class. Update your User class like this:
 

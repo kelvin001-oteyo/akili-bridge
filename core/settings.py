@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+from datetime import timedelta
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,6 +25,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework.authtoken",
+    "rest_framework_simplejwt",  # Add this if not already present
     "corsheaders",
     "fellowship",
     "blog",
@@ -54,7 +56,7 @@ ROOT_URLCONF = "core.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "frontend"],
+        "DIRS": [BASE_DIR / "frontend", BASE_DIR / "templates"],  # Add templates directory
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -109,10 +111,30 @@ REST_FRAMEWORK = {
     ],
 }
 
+# Email Configuration - Update these with your actual email settings
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.yourprovider.com"
+EMAIL_HOST = "akilibridgegmail.com"  # Change to your email provider
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "your_email@example.com"
-EMAIL_HOST_PASSWORD = "your_password"
-DEFAULT_FROM_EMAIL = "no-reply@akilibridge.com"
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "your_email@gmail.com")  # Use environment variables
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "your_password")  # Use environment variables
+DEFAULT_FROM_EMAIL = "Akili Bridge <no-reply@akilibridge.com>"
+
+# Frontend URL for email links
+FRONTEND_URL = os.environ.get("FRONTEND_URL", "https://akili-bridge.onrender.com")
+
+# JWT Settings
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'UPDATE_LAST_LOGIN': False,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+}
+
+# Optional: For development, you can use console email backend
+# Uncomment this for development to see emails in console
+# if DEBUG:
+#     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

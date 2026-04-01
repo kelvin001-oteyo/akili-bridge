@@ -17,3 +17,7 @@ __pycache__/
 
 # MacOS
 .DS_Store
+"__pycache__/" 
+"*.pyc" 
+"db.sqlite3" 
+".env" 
