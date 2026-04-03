@@ -294,7 +294,7 @@ export default function ForMentors() {
         </motion.div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         /* Main Container */
         .for-mentors {
           position: relative;

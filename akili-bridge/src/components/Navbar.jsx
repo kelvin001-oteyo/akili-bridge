@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
+import logo from "../assets/akili_bridge_logo.svg";
 import "./Navbar.css";
 
-const MotionLink = motion(Link);
+const MotionLink = motion.create(Link);
 
 export default function Navbar() {
   const [openMenu, setOpenMenu] = useState(null);
@@ -151,6 +152,7 @@ export default function Navbar() {
             whileTap={{ scale: 0.95 }}
             onClick={closeMenus}
           >
+            <img src={logo} alt="Akili Bridge logo" className="logo-image" />
             <motion.span
               className="logo-text"
               initial={{ opacity: 0, x: -20 }}

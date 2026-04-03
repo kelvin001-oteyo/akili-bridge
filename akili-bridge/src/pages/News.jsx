@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { apiFetch } from "../utils/api";  // ✅ import your helper
 
-const MotionLink = motion(Link);
+const MotionLink = motion.create(Link);
 
 export default function WhatsNew() {
   const [posts, setPosts] = useState([]);
@@ -387,7 +387,7 @@ useEffect(() => {
         </motion.div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         /* Main Container */
         .whats-new {
           position: relative;

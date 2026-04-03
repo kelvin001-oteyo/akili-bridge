@@ -283,7 +283,7 @@ export default function TrainingWorkshops() {
         </motion.div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         /* Main Container */
         .training-workshops {
           position: relative;

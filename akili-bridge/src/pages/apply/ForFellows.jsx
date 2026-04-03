@@ -286,7 +286,7 @@ export default function ForFellows() {
         </motion.div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         /* Main Container */
         .for-fellows {
           position: relative;

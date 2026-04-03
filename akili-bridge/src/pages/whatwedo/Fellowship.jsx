@@ -295,7 +295,7 @@ export default function Fellowship() {
         </motion.div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         /* Main Container */
         .fellowship {
           position: relative;

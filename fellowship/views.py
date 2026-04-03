@@ -62,19 +62,23 @@ class RegisterView(generics.CreateAPIView):
             
             confirmation_link = f"{settings.FRONTEND_URL}/confirm-email/{token.token}"
             
-            html_content = render_to_string("emails/welcome_email.html", {
-                "user": user,
-                "confirmation_link": confirmation_link
-            })
-            
-            msg = EmailMultiAlternatives(
-                subject="Welcome to Akili Bridge - Confirm Your Email",
-                body=f"Welcome! Please click this link to confirm your email: {confirmation_link}",
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                to=[user.email],
-            )
-            msg.attach_alternative(html_content, "text/html")
-            msg.send()
+            # Send confirmation email; don't fail registration if email backend is misconfigured
+            try:
+                html_content = render_to_string("emails/welcome_email.html", {
+                    "user": user,
+                    "confirmation_link": confirmation_link
+                })
+                msg = EmailMultiAlternatives(
+                    subject="Welcome to Akili Bridge - Confirm Your Email",
+                    body=f"Welcome! Please click this link to confirm your email: {confirmation_link}",
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to=[user.email],
+                )
+                msg.attach_alternative(html_content, "text/html")
+                msg.send(fail_silently=False)
+            except Exception as exc:
+                # Log for debugging in server logs but allow user creation
+                print(f"Email send failed: {exc}")
             
         return response
 
@@ -111,6 +115,24 @@ class FellowshipApplicationViewSet(viewsets.ModelViewSet):
             serializer.save(applicant=self.request.user)
         else:
             serializer.save()
+        
+        # Best-effort notification email; don't break submission if email fails
+        try:
+            application = serializer.instance
+            html_content = render_to_string(
+                "emails/application_received.html",
+                {"full_name": application.full_name},
+            )
+            msg = EmailMultiAlternatives(
+                subject="Application Received",
+                body="Thank you for applying to Akili Bridge. Your application is now under review.",
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                to=[application.email],
+            )
+            msg.attach_alternative(html_content, "text/html")
+            msg.send(fail_silently=False)
+        except Exception as exc:
+            print(f"Fellowship application email send failed: {exc}")
 
 
 # Dashboard content API
@@ -153,16 +175,22 @@ class UndergraduateApplicationViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         application = serializer.save()
         
-        # Send email confirmation for application submission
-        html_content = render_to_string("emails/application_received.html", {"full_name": application.full_name})
-        msg = EmailMultiAlternatives(
-            subject="Application Received",
-            body="Thank you for applying to Akili Bridge. Your application is now under review.",
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            to=[application.email],
-        )
-        msg.attach_alternative(html_content, "text/html")
-        msg.send()
+        # Best-effort email; log failures but keep submission
+        try:
+            html_content = render_to_string(
+                "emails/application_received.html",
+                {"full_name": application.full_name},
+            )
+            msg = EmailMultiAlternatives(
+                subject="Application Received",
+                body="Thank you for applying to Akili Bridge. Your application is now under review.",
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                to=[application.email],
+            )
+            msg.attach_alternative(html_content, "text/html")
+            msg.send(fail_silently=False)
+        except Exception as exc:
+            print(f"Undergraduate application email send failed: {exc}")
         return application
 
 
@@ -233,19 +261,22 @@ class RequestEmailConfirmationView(APIView):
             # Send confirmation email
             confirmation_link = f"{settings.FRONTEND_URL}/confirm-email/{token.token}"
             
-            html_content = render_to_string("emails/confirm_email.html", {
-                "user": user,
-                "confirmation_link": confirmation_link
-            })
-            
-            msg = EmailMultiAlternatives(
-                subject="Confirm Your Email Address",
-                body=f"Please click this link to confirm your email: {confirmation_link}",
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                to=[user.email],
-            )
-            msg.attach_alternative(html_content, "text/html")
-            msg.send()
+            try:
+                html_content = render_to_string("emails/confirm_email.html", {
+                    "user": user,
+                    "confirmation_link": confirmation_link
+                })
+                
+                msg = EmailMultiAlternatives(
+                    subject="Confirm Your Email Address",
+                    body=f"Please click this link to confirm your email: {confirmation_link}",
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to=[user.email],
+                )
+                msg.attach_alternative(html_content, "text/html")
+                msg.send(fail_silently=False)
+            except Exception as exc:
+                print(f"Email confirmation send failed: {exc}")
             
             return Response({"message": "Confirmation email sent"}, status=status.HTTP_200_OK)
             
@@ -304,14 +335,19 @@ class RequestPasswordResetView(APIView):
                 "reset_link": reset_link
             })
             
-            msg = EmailMultiAlternatives(
-                subject="Password Reset Request",
-                body=f"Please click this link to reset your password: {reset_link}",
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                to=[user.email],
-            )
-            msg.attach_alternative(html_content, "text/html")
-            msg.send()
+            # Try sending email; do not fail if email backend is misconfigured
+            try:
+                msg = EmailMultiAlternatives(
+                    subject="Password Reset Request",
+                    body=f"Please click this link to reset your password: {reset_link}",
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to=[user.email],
+                )
+                msg.attach_alternative(html_content, "text/html")
+                msg.send(fail_silently=False)
+            except Exception as exc:
+                # Log and continue; user should still be able to reset with the token
+                print(f"Password reset email send failed: {exc}")
             
             return Response({"message": "Password reset email sent"}, status=status.HTTP_200_OK)
             

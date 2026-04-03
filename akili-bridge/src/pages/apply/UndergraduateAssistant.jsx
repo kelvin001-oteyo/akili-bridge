@@ -292,7 +292,7 @@ export default function UndergraduateAssistant() {
         </motion.div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         /* Main Container */
         .undergraduate-assistant {
           position: relative;

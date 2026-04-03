@@ -201,7 +201,7 @@ export default function WhoWeAre() {
         </motion.div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         /* Main Container */
         .who-we-are {
           position: relative;

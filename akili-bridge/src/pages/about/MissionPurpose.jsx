@@ -222,7 +222,7 @@ export default function MissionPurpose() {
         </motion.div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         /* Main Container */
         .mission-purpose {
           position: relative;

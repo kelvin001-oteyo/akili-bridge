@@ -196,7 +196,7 @@ export default function GetToKnowUs() {
         </motion.div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         /* Main Container */
         .get-to-know-us {
           position: relative;

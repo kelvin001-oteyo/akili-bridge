@@ -214,7 +214,7 @@ export default function Labs() {
         </motion.div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         /* Main Container */
         .labs-page {
           position: relative;

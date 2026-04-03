@@ -545,7 +545,7 @@ export default function CareersApplication() {
         </motion.form>
       </div>
 
-      <style jsx>{`
+      <style>{`
         /* Main Container */
         .careers-application {
           position: relative;

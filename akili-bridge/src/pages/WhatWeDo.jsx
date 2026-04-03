@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 
-const MotionLink = motion(Link);
+const MotionLink = motion.create(Link);
 
 export default function WhatWeDo() {
   const navigate = useNavigate();
@@ -264,7 +264,7 @@ export default function WhatWeDo() {
         </motion.div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         /* Import Google Fonts */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 

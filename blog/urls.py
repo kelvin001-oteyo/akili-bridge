@@ -4,8 +4,12 @@ from blog.views import BlogPostViewSet
 from django.urls import path, include
 
 router = routers.DefaultRouter()
-router.register(r"blog", BlogPostViewSet)
+# Mounted at \"api/blog/\" in core/urls.py, so keep the prefix empty to avoid a double \"api/\".
+# Final routes become:
+#   /api/blog/            -> list/create
+#   /api/blog/<id>/       -> retrieve/update/delete
+router.register(r"", BlogPostViewSet)
 
 urlpatterns = [
-    path("api/", include(router.urls)),
+    path("", include(router.urls)),
 ]

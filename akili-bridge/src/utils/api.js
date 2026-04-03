@@ -1,11 +1,14 @@
 // src/utils/api.js
 
-// Use environment variable if configured; fallback to local backend in development and production backend otherwise.
+// Resolve API base:
+// 1) explicit VITE_API_URL (recommended)
+// 2) same-origin when running from a deployed domain
+// 3) local Django dev server as sensible default
 const API_URL =
   import.meta.env.VITE_API_URL ||
-  (import.meta.env.MODE === "development"
-    ? "http://127.0.0.1:8000"
-    : "https://akili-bridge.onrender.com");
+  (typeof window !== "undefined" && window.location.origin.includes("onrender.com")
+    ? window.location.origin
+    : "http://127.0.0.1:8000");
 
 function getCookie(name) {
   return document.cookie

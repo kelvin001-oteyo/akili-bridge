@@ -11,7 +11,7 @@ import {
 } from "./Icons";
 import "./Footer.css";
 
-const MotionLink = motion(Link);
+const MotionLink = motion.create(Link);
 
 export default function Footer() {
   const footerRef = useRef(null);
@@ -364,9 +364,9 @@ export default function Footer() {
           transition={{ delay: 0.9, duration: 0.8 }}
         />
         <div style={{ display: "flex", justifyContent: "center", gap: "20px", flexWrap: "wrap", fontSize: "0.85rem" }}>
-          <motion.p whileHover={{ color: "#ffd966" }}>&copy; 2025 | All Rights Reserved.</motion.p>
+          <motion.p whileHover={{ color: "#ffd966" }}>&copy; 2025 | Akili Bridge | All Rights Reserved.</motion.p>
           <motion.p whileHover={{ color: "#ffd966" }}>StaffWEBMAIL | WebAdmin</motion.p>
-          <motion.p whileHover={{ color: "#ffd966" }}>Designer Eon Promaxfy Ltd</motion.p>
+          <motion.p whileHover={{ color: "#ffd966" }}>Built by Akili Bridge</motion.p>
         </div>
       </motion.div>
 
