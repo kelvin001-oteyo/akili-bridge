@@ -10,6 +10,7 @@
   z-index: 1000;
   font-family: 'Poppins', 'Inter', sans-serif;
   transition: all 0.3s ease;
+  overflow: visible; /* prevent logo from getting clipped */
 }
 
 .navbar-scrolled {
@@ -77,13 +78,14 @@
 .navbar-container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 1.2rem 2.2rem;
+  padding: 1rem 1.6rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1.1rem; /* balanced spacing between logo and menu */
+  gap: 1rem; /* balanced spacing between logo and menu */
   position: relative;
   z-index: 2;
+  flex-wrap: wrap;
 }
 
 /* Logo Styles */
@@ -95,23 +97,25 @@
   cursor: pointer;
   position: relative;
   font-weight: 800;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   letter-spacing: -0.5px;
-  padding: 4px 10px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.12);
+  padding: 4px 8px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(47, 179, 255, 0.4);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+  max-width: clamp(180px, 14vw, 220px);
+  flex-shrink: 0; /* keep logo fully visible */
 }
 
 .logo-image {
-  width: 60px;
-  height: 60px;
+  width: clamp(44px, 4vw, 56px);
+  height: clamp(44px, 4vw, 56px);
   object-fit: contain;
   padding: 4px;
   border-radius: 12px;
   background: #ffffff;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.24);
 }
 
 .logo-text {
@@ -144,10 +148,13 @@
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 2rem;
+  gap: 1.6rem;
   align-items: center;
   margin: 0;
   padding: 0;
+  flex: 1 1 auto;
+  justify-content: center;
+  min-width: 0;
 }
 
 .nav-item,
@@ -361,12 +368,22 @@
 /* Responsive Design */
 @media (max-width: 1024px) {
   .nav-links {
-    gap: 1.5rem;
+    gap: 1.2rem;
   }
   
   .nav-links a,
   .dropdown-btn {
     font-size: 0.9rem;
+  }
+
+  .logo {
+    max-width: clamp(170px, 16vw, 200px);
+    padding: 4px 6px;
+  }
+
+  .logo-image {
+    width: clamp(42px, 5vw, 52px);
+    height: clamp(42px, 5vw, 52px);
   }
 }
 
