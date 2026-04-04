@@ -92,25 +92,25 @@
 .logo {
   display: flex;
   align-items: center;
-  gap: 0.35rem; /* tighten AkiliBridge wordmark */
+  gap: 0.3rem; /* tighten AkiliBridge wordmark */
   margin-right: 0.9rem; /* still give room before first nav link */
   cursor: pointer;
   position: relative;
   font-weight: 800;
-  font-size: 1.5rem;
+  font-size: 1.45rem;
   letter-spacing: -0.5px;
   padding: 4px 8px;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(47, 179, 255, 0.4);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
-  max-width: clamp(180px, 14vw, 220px);
+  max-width: clamp(190px, 18vw, 260px);
   flex-shrink: 0; /* keep logo fully visible */
 }
 
 .logo-image {
-  width: clamp(44px, 4vw, 56px);
-  height: clamp(44px, 4vw, 56px);
+  width: clamp(46px, 4.3vw, 60px);
+  height: clamp(46px, 4.3vw, 60px);
   object-fit: contain;
   padding: 4px;
   border-radius: 12px;

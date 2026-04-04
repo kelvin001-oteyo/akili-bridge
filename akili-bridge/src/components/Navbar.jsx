@@ -275,11 +275,6 @@ export default function Navbar() {
                   animate="visible"
                   custom={10}
                 >
-                  <img
-                    src="/akili_bridge_social_icon_512.png"
-                    alt="AkiliBridge profile icon"
-                    className="profile-icon"
-                  />
                   <span className="welcome-text">
                     Welcome, {user.username || user.email}
                   </span>
