@@ -224,12 +224,11 @@ export default function Navbar() {
                     >
                       {item.name}
                       <motion.span
+                        aria-hidden
                         animate={{ rotate: openMenu === item.key ? 180 : 0 }}
                         transition={{ duration: 0.3 }}
                         className="dropdown-arrow"
-                      >
-                        ▼
-                      </motion.span>
+                      />
                     </motion.button>
                     <AnimatePresence>
                       {openMenu === item.key && (
@@ -368,10 +367,9 @@ export default function Navbar() {
                 <motion.button
                   className="mobile-close-btn"
                   onClick={closeMenus}
+                  aria-label="Close menu"
                   whileTap={{ scale: 0.9 }}
-                >
-                  ✕
-                </motion.button>
+                />
               </div>
               <ul className="mobile-nav-links">
                 {[
