@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiFetch } from "../utils/api";
 import "./Home.css";
+import brandIcon from "../assets/images/akili_bridge_logo_32.png";
 
 export default function Home() {
   const containerRef = useRef(null);
@@ -95,7 +96,7 @@ export default function Home() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            Akili BRIDGE
+            AkiliBridge
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -204,6 +205,7 @@ export default function Home() {
               transition={{ delay: 0.8 }}
               onClick={() => navigate("/careers/undergraduate")}
             >
+              <img src={brandIcon} alt="AkiliBridge logo" className="btn-icon" />
               <span>Learn More</span>
               <motion.span
                 animate={{ x: [0, 5, 0] }}
@@ -260,7 +262,7 @@ export default function Home() {
               whileInView={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
             >
-              At Akili Bridge, we believe Africa needs more researchers — not just in
+              At AkiliBridge, we believe Africa needs more researchers — not just in
               numbers, but in quality, innovation, and impact.
             </motion.p>
           </motion.div>
@@ -334,7 +336,7 @@ export default function Home() {
               whileInView={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
             >
-              Stay updated with the latest from Akili Bridge — workshops, fellowship
+              Stay updated with the latest from AkiliBridge — workshops, fellowship
               updates, and announcements.
             </motion.p>
 
@@ -373,6 +375,7 @@ export default function Home() {
               transition={{ delay: 0.9 }}
               onClick={() => navigate("/careers/application")}
             >
+              <img src={brandIcon} alt="AkiliBridge logo" className="btn-icon" />
               Discover More
               <motion.span
                 animate={{ rotate: [0, 360] }}
@@ -409,7 +412,7 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.2 }}
             style={{ maxWidth: "720px", margin: "0 auto 1.5rem", lineHeight: 1.8 }}
           >
-            Subscribe to Akili Bridge announcements and receive the latest fellowship,
+            Subscribe to AkiliBridge announcements and receive the latest fellowship,
             events, and research updates straight to your inbox.
           </motion.p>
           <motion.form
@@ -440,13 +443,17 @@ export default function Home() {
                 padding: "14px 26px",
                 borderRadius: "8px",
                 border: "none",
-                background: "#ffd966",
+                background: "#2fb3ff",
                 color: "#1e2a47",
                 fontWeight: "700",
                 cursor: "pointer",
                 minWidth: "160px",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
               }}
             >
+              <img src={brandIcon} alt="AkiliBridge logo" className="btn-icon" />
               {subscribed ? "Subscribed ✓" : "Subscribe"}
             </motion.button>
           </motion.form>

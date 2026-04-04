@@ -137,7 +137,7 @@ export default function MissionPurpose() {
           <h2 className="section-title">Our Commitment</h2>
           <div className="commitment-intro">
             <p className="commitment-text">
-              Akili Bridge is not just an initiative; it is a movement to empower Africa's next
+              AkiliBridge is not just an initiative; it is a movement to empower Africa's next
               generation of innovators, thinkers, and changemakers. Together, we are building a future
               where African research drives solutions that transform communities and influence the world.
             </p>
@@ -350,7 +350,7 @@ export default function MissionPurpose() {
           font-size: 1.8rem;
           font-weight: 700;
           margin-bottom: 1rem;
-          background: linear-gradient(135deg, #ff6a00, #ffb347);
+          background: linear-gradient(135deg, #ff6a00, #c68a3d);
           background-clip: text;
           -webkit-background-clip: text;
           color: transparent;
@@ -376,7 +376,7 @@ export default function MissionPurpose() {
           display: block;
           width: 60px;
           height: 3px;
-          background: linear-gradient(90deg, #ff6a00, #ffb347);
+          background: linear-gradient(90deg, #ff6a00, #c68a3d);
           margin: 0.5rem auto 0;
           border-radius: 3px;
         }
@@ -518,7 +518,7 @@ export default function MissionPurpose() {
         .cta-button {
           position: relative;
           padding: 1rem 2.5rem;
-          background: linear-gradient(90deg, #ff6a00, #ffb347);
+          background: linear-gradient(90deg, #ff6a00, #c68a3d);
           border: none;
           border-radius: 50px;
           color: #ffffff;

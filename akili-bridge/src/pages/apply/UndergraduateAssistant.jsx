@@ -420,7 +420,7 @@ export default function UndergraduateAssistant() {
           display: block;
           font-size: 2rem;
           font-weight: 800;
-          background: linear-gradient(135deg, #ff6a00, #ffb347);
+          background: linear-gradient(135deg, #ff6a00, #c68a3d);
           background-clip: text;
           -webkit-background-clip: text;
           color: transparent;
@@ -451,7 +451,7 @@ export default function UndergraduateAssistant() {
           display: block;
           width: 60px;
           height: 3px;
-          background: linear-gradient(90deg, #ff6a00, #ffb347);
+          background: linear-gradient(90deg, #ff6a00, #c68a3d);
           margin: 0.5rem auto 0;
           border-radius: 3px;
         }
@@ -460,7 +460,7 @@ export default function UndergraduateAssistant() {
           font-size: 1.6rem;
           font-weight: 700;
           margin: 0;
-          background: linear-gradient(135deg, #ff6a00, #ffb347);
+          background: linear-gradient(135deg, #ff6a00, #c68a3d);
           background-clip: text;
           -webkit-background-clip: text;
           color: transparent;
@@ -621,7 +621,7 @@ export default function UndergraduateAssistant() {
         .step-number-circle {
           width: 32px;
           height: 32px;
-          background: linear-gradient(135deg, #ff6a00, #ffb347);
+          background: linear-gradient(135deg, #ff6a00, #c68a3d);
           border-radius: 50%;
           display: flex;
           align-items: center;
@@ -695,7 +695,7 @@ export default function UndergraduateAssistant() {
         .cta-button {
           position: relative;
           padding: 1rem 2.5rem;
-          background: linear-gradient(90deg, #ff6a00, #ffb347);
+          background: linear-gradient(90deg, #ff6a00, #c68a3d);
           border: none;
           border-radius: 50px;
           color: #ffffff;

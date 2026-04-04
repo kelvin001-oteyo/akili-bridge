@@ -11,7 +11,7 @@ export default function About() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        <h1>About Akili Bridge</h1>
+        <h1>About AkiliBridge</h1>
         <p>Building Africa’s Next Generation of Researchers</p>
       </motion.section>
 
@@ -23,7 +23,7 @@ export default function About() {
         transition={{ delay: 0.5, duration: 1 }}
       >
         <p>
-          At Akili Bridge, we provide aspiring African researchers with the
+          At AkiliBridge, we provide aspiring African researchers with the
           skills, training, and support needed to tackle Africa’s most pressing
           challenges. Through our fellowship and training programs, we equip
           undergraduate students with hands-on research experience, mentorship

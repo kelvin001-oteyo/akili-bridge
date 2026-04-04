@@ -7,7 +7,7 @@ export default function WhoWeAre() {
   const milestones = [
     {
       year: "2024",
-      title: "Akili Bridge Founded",
+      title: "AkiliBridge Founded",
       description: "Established to bridge Africa's research gap and empower emerging scholars.",
     },
     {
@@ -111,7 +111,7 @@ export default function WhoWeAre() {
               <span className="mission-icon">🌍</span>
             </div>
             <p className="mission-text">
-              At Akili Bridge, we believe Africa's greatest potential lies in its people. Our mission
+              At AkiliBridge, we believe Africa's greatest potential lies in its people. Our mission
               is to bridge Africa's research gap by empowering emerging scholars to become world-class
               researchers and innovators.
             </p>
@@ -293,7 +293,7 @@ export default function WhoWeAre() {
         .tagline {
           font-size: clamp(1.2rem, 4vw, 1.8rem);
           font-weight: 600;
-          background: linear-gradient(135deg, #ff6a00, #ffb347);
+          background: linear-gradient(135deg, #ff6a00, #c68a3d);
           background-clip: text;
           -webkit-background-clip: text;
           color: transparent;
@@ -304,7 +304,7 @@ export default function WhoWeAre() {
         .tagline-underline {
           width: 80px;
           height: 3px;
-          background: linear-gradient(90deg, #ff6a00, #ffb347);
+          background: linear-gradient(90deg, #ff6a00, #c68a3d);
           margin: 0.5rem auto 0;
           border-radius: 3px;
           animation: expandWidth 0.6s ease-out;
@@ -397,7 +397,7 @@ export default function WhoWeAre() {
           display: block;
           width: 60px;
           height: 3px;
-          background: linear-gradient(90deg, #ff6a00, #ffb347);
+          background: linear-gradient(90deg, #ff6a00, #c68a3d);
           margin: 0.5rem auto 0;
           border-radius: 3px;
         }
@@ -413,7 +413,7 @@ export default function WhoWeAre() {
           top: 0;
           bottom: 0;
           width: 2px;
-          background: linear-gradient(180deg, #ff6a00, #ffb347, rgba(255, 106, 0, 0.2));
+          background: linear-gradient(180deg, #ff6a00, #c68a3d, rgba(255, 106, 0, 0.2));
         }
 
         .timeline-items {
@@ -472,7 +472,7 @@ export default function WhoWeAre() {
         .timeline-year {
           display: inline-block;
           padding: 0.25rem 0.75rem;
-          background: linear-gradient(135deg, #ff6a00, #ffb347);
+          background: linear-gradient(135deg, #ff6a00, #c68a3d);
           border-radius: 20px;
           font-size: 0.8rem;
           font-weight: 600;
@@ -483,7 +483,7 @@ export default function WhoWeAre() {
           font-size: 1.3rem;
           font-weight: 600;
           margin-bottom: 0.5rem;
-          color: #ffb347;
+          color: #c68a3d;
         }
 
         .timeline-description {
@@ -501,7 +501,7 @@ export default function WhoWeAre() {
         .cta-button {
           position: relative;
           padding: 1rem 2.5rem;
-          background: linear-gradient(90deg, #ff6a00, #ffb347);
+          background: linear-gradient(90deg, #ff6a00, #c68a3d);
           border: none;
           border-radius: 50px;
           color: #ffffff;

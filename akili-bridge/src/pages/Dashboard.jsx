@@ -201,7 +201,7 @@ export default function Dashboard() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
         >
-          {user ? `Welcome, ${user.username}` : "Welcome to Akili Bridge Dashboard"}
+          {user ? `Welcome, ${user.username}` : "Welcome to AkiliBridge Dashboard"}
         </motion.h1>
 
         <motion.p

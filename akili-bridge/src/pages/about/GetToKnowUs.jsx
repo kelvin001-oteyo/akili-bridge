@@ -163,7 +163,7 @@ export default function GetToKnowUs() {
             <div className="mission-icon">🎯</div>
             <h2 className="section-title">Our Mission</h2>
             <p className="mission-text">
-              At Akili Bridge, we are committed to reversing these trends. Our mission is to empower
+              At AkiliBridge, we are committed to reversing these trends. Our mission is to empower
               emerging African researchers by providing comprehensive training, mentorship, and
               resources. By fostering a vibrant, indigenous research culture, we aim to catalyze
               innovative solutions directly aligned with Africa's unique challenges and opportunities.
@@ -305,7 +305,7 @@ export default function GetToKnowUs() {
         .tagline-underline {
           width: 80px;
           height: 3px;
-          background: linear-gradient(90deg, #ff6a00, #ffb347);
+          background: linear-gradient(90deg, #ff6a00, #c68a3d);
           margin: 0.5rem auto 0;
           border-radius: 3px;
           animation: expandWidth 0.6s ease-out;
@@ -342,7 +342,7 @@ export default function GetToKnowUs() {
         .stat-number {
           font-size: 2rem;
           font-weight: 800;
-          background: linear-gradient(135deg, #ffd966, #ffb347);
+          background: linear-gradient(135deg, #d9b26a, #c68a3d);
           background-clip: text;
           -webkit-background-clip: text;
           color: transparent;
@@ -384,7 +384,7 @@ export default function GetToKnowUs() {
           display: block;
           width: 60px;
           height: 3px;
-          background: linear-gradient(90deg, #ff6a00, #ffb347);
+          background: linear-gradient(90deg, #ff6a00, #c68a3d);
           margin: 0.5rem auto 0;
           border-radius: 3px;
         }
@@ -425,7 +425,7 @@ export default function GetToKnowUs() {
           display: inline-block;
           font-size: 2rem;
           font-weight: 800;
-          background: linear-gradient(135deg, #ff6a00, #ffb347);
+          background: linear-gradient(135deg, #ff6a00, #c68a3d);
           background-clip: text;
           -webkit-background-clip: text;
           color: transparent;
@@ -452,7 +452,7 @@ export default function GetToKnowUs() {
           left: 0;
           right: 0;
           height: 3px;
-          background: linear-gradient(90deg, #ff6a00, #ffb347);
+          background: linear-gradient(90deg, #ff6a00, #c68a3d);
           transform: scaleX(0);
           transition: transform 0.3s ease;
         }
@@ -503,7 +503,7 @@ export default function GetToKnowUs() {
         .cta-button {
           position: relative;
           padding: 1rem 2.5rem;
-          background: linear-gradient(90deg, #ff6a00, #ffb347);
+          background: linear-gradient(90deg, #ff6a00, #c68a3d);
           border: none;
           border-radius: 50px;
           color: #ffffff;

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/akili_bridge_logo.svg";
+import logo from "../assets/images/akili_bridge_logo_180.png";
 import "./Navbar.css";
 
 const MotionLink = motion.create(Link);
@@ -152,27 +152,12 @@ export default function Navbar() {
             whileTap={{ scale: 0.95 }}
             onClick={closeMenus}
           >
-            <img src={logo} alt="Akili Bridge logo" className="logo-image" />
-            <motion.span
-              className="logo-text"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              Akili
-            </motion.span>
-            <motion.span
-              className="logo-highlight"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              BRIDGE
-            </motion.span>
-            <motion.div
-              className="logo-dot"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
+            <img src={logo} alt="AkiliBridge logo" className="logo-image" />
+              <motion.span className="logo-text" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>Akili</motion.span><motion.span className="logo-highlight" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>Bridge</motion.span>
+              <motion.div
+                className="logo-dot"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
               transition={{ delay: 0.3, type: "spring" }}
             />
           </MotionLink>
@@ -272,7 +257,7 @@ export default function Navbar() {
                   <MotionLink
                     to={item.path}
                     onClick={closeMenus}
-                    whileHover={{ scale: 1.05, color: "#ffd966" }}
+                    whileHover={{ scale: 1.05, color: "#d9b26a" }}
                     whileTap={{ scale: 0.95 }}
                   >
                     {item.name}
@@ -291,6 +276,11 @@ export default function Navbar() {
                   animate="visible"
                   custom={10}
                 >
+                  <img
+                    src="/akili_bridge_social_icon_512.png"
+                    alt="AkiliBridge profile icon"
+                    className="profile-icon"
+                  />
                   <span className="welcome-text">
                     Welcome, {user.username || user.email}
                   </span>
@@ -324,7 +314,7 @@ export default function Navbar() {
                   to="/auth"
                   onClick={closeMenus}
                   className="auth-link"
-                  whileHover={{ scale: 1.05, color: "#ffd966" }}
+                  whileHover={{ scale: 1.05, color: "#d9b26a" }}
                   whileTap={{ scale: 0.95 }}
                 >
                   Register / Login
@@ -374,7 +364,7 @@ export default function Navbar() {
               transition={{ delay: 0.1 }}
             >
               <div className="mobile-menu-header">
-                <div className="mobile-logo">Akili BRIDGE</div>
+                <div className="mobile-logo">AkiliBridge</div>
                 <motion.button
                   className="mobile-close-btn"
                   onClick={closeMenus}

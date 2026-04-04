@@ -59,7 +59,7 @@ export default function Apply() {
         <h2>Ready to Apply?</h2>
         <p>
           Applications are open online. Don’t miss the chance to be part of the
-          first cohort of Akili Bridge Fellows.
+          first cohort of AkiliBridge Fellows.
         </p>
         <motion.button
           className="apply-btn"

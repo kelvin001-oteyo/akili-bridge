@@ -13,7 +13,7 @@ export default function Careers() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        <h1>Careers at Akili Bridge</h1>
+        <h1>Careers at AkiliBridge</h1>
         <p>
           Join us in building Africa’s next generation of researchers and innovators.
         </p>
@@ -28,7 +28,7 @@ export default function Careers() {
       >
         <h2>Why Work With Us?</h2>
         <p>
-          At Akili Bridge, we believe in nurturing talent, fostering innovation,
+          At AkiliBridge, we believe in nurturing talent, fostering innovation,
           and creating opportunities for growth. Our team is dedicated to
           empowering African scholars through mentorship, training, and impactful
           research programs.
@@ -64,7 +64,7 @@ export default function Careers() {
         <p>
           Interested candidates can submit their applications online. Share your
           CV and a short motivation statement explaining why you want to join
-          Akili Bridge.
+          AkiliBridge.
         </p>
         <motion.button
           className="careers-btn"

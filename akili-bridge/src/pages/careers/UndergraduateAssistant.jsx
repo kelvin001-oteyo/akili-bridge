@@ -160,7 +160,7 @@ export default function CareersApplication() {
             Career Application Form
           </h1>
           <p className="header-description">
-            Take the next step in your research career. Apply to join the Akili Bridge community
+            Take the next step in your research career. Apply to join the AkiliBridge community
             and contribute to groundbreaking research that shapes Africa's future.
           </p>
         </motion.div>

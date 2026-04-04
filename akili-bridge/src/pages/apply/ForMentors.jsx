@@ -115,7 +115,7 @@ export default function ForMentors() {
             <h2 className="intro-title">Fellowship Program Mentor Application</h2>
             <p className="intro-text">
               Are you passionate about shaping the future of African research and innovation?
-              The Akili Bridge STEM Fellowship Program invites experienced researchers,
+              The AkiliBridge STEM Fellowship Program invites experienced researchers,
               academics, and industry experts to mentor Africa's brightest emerging STEM talents.
             </p>
             <p className="intro-text">
@@ -207,7 +207,7 @@ export default function ForMentors() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <h2 className="section-title">Why Become an Akili Bridge Mentor?</h2>
+          <h2 className="section-title">Why Become an AkiliBridge Mentor?</h2>
           <div className="benefits-grid">
             {benefits.map((benefit, index) => (
               <motion.div
@@ -381,7 +381,7 @@ export default function ForMentors() {
           display: block;
           font-size: clamp(1rem, 3vw, 1.3rem);
           font-weight: 500;
-          background: linear-gradient(135deg, #ff6a00, #ffb347);
+          background: linear-gradient(135deg, #ff6a00, #c68a3d);
           background-clip: text;
           -webkit-background-clip: text;
           color: transparent;
@@ -421,7 +421,7 @@ export default function ForMentors() {
           font-size: 1.8rem;
           font-weight: 700;
           margin-bottom: 1.5rem;
-          background: linear-gradient(135deg, #ff6a00, #ffb347);
+          background: linear-gradient(135deg, #ff6a00, #c68a3d);
           background-clip: text;
           -webkit-background-clip: text;
           color: transparent;
@@ -474,7 +474,7 @@ export default function ForMentors() {
           font-size: 1.4rem;
           font-weight: 700;
           margin: 0;
-          background: linear-gradient(135deg, #ff6a00, #ffb347);
+          background: linear-gradient(135deg, #ff6a00, #c68a3d);
           background-clip: text;
           -webkit-background-clip: text;
           color: transparent;
@@ -516,7 +516,7 @@ export default function ForMentors() {
           display: block;
           width: 60px;
           height: 3px;
-          background: linear-gradient(90deg, #ff6a00, #ffb347);
+          background: linear-gradient(90deg, #ff6a00, #c68a3d);
           margin: 0.5rem auto 0;
           border-radius: 3px;
         }
@@ -589,7 +589,7 @@ export default function ForMentors() {
         .step-number {
           width: 40px;
           height: 40px;
-          background: linear-gradient(135deg, #ff6a00, #ffb347);
+          background: linear-gradient(135deg, #ff6a00, #c68a3d);
           border-radius: 50%;
           display: flex;
           align-items: center;
@@ -650,7 +650,7 @@ export default function ForMentors() {
         .cta-button {
           position: relative;
           padding: 1rem 2.5rem;
-          background: linear-gradient(90deg, #ff6a00, #ffb347);
+          background: linear-gradient(90deg, #ff6a00, #c68a3d);
           border: none;
           border-radius: 50px;
           color: #ffffff;

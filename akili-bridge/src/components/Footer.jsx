@@ -10,6 +10,7 @@ import {
   XIcon,
 } from "./Icons";
 import "./Footer.css";
+import footerLogo from "../assets/images/akili_bridge_logo.svg";
 
 const MotionLink = motion.create(Link);
 
@@ -84,7 +85,7 @@ export default function Footer() {
     },
     hover: {
       x: 8,
-      color: "#ffd966",
+      color: "#2fb3ff",
       transition: { duration: 0.2 },
     },
   };
@@ -149,7 +150,7 @@ export default function Footer() {
             transition={{ duration: 0.6, delay: 0.2 }}
             whileHover={{ textShadow: "0 0 20px rgba(255,217,102,0.5)" }}
           >
-            Akili <span>BRIDGE</span>
+            Akili <span>Bridge</span>
           </motion.div>
           <motion.p
             variants={itemVariants}
@@ -171,7 +172,7 @@ export default function Footer() {
             style={{
               fontSize: "1.2rem",
               marginBottom: "1rem",
-              color: "#ffd966",
+              color: "#2fb3ff",
               position: "relative",
               display: "inline-block",
             }}
@@ -186,7 +187,7 @@ export default function Footer() {
                 bottom: -5,
                 left: 0,
                 height: "2px",
-                background: "#ffd966",
+                background: "#2fb3ff",
                 borderRadius: "2px",
               }}
             />
@@ -214,7 +215,7 @@ export default function Footer() {
                     transition: "color 0.2s",
                     display: "inline-block",
                   }}
-                  whileHover={{ color: "#ffd966" }}
+                  whileHover={{ color: "#2fb3ff" }}
                 >
                   {link.name}
                 </MotionLink>
@@ -228,7 +229,7 @@ export default function Footer() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            style={{ marginBottom: "1rem", color: "#ffd966", display: "flex", alignItems: "center", gap: "0.5rem" }}
+            style={{ marginBottom: "1rem", color: "#2fb3ff", display: "flex", alignItems: "center", gap: "0.5rem" }}
           >
             <MailIcon style={{ width: "1rem", height: "1rem" }} />
             Subscribe for updates
@@ -239,7 +240,7 @@ export default function Footer() {
               placeholder="Enter your official email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              whileFocus={{ scale: 1.02, boxShadow: "0 0 0 2px #ffd966" }}
+              whileFocus={{ scale: 1.02, boxShadow: "0 0 0 2px #2fb3ff" }}
               style={{
                 flex: 1,
                 padding: "12px 16px",
@@ -254,14 +255,14 @@ export default function Footer() {
             />
             <motion.button
               type="submit"
-              whileHover={{ scale: 1.05, backgroundColor: "#ffd966", color: "#1a2a3a" }}
+              whileHover={{ scale: 1.05, backgroundColor: "#2fb3ff", color: "#1a2a3a" }}
               whileTap={{ scale: 0.95 }}
               animate={subscribed ? { scale: [1, 1.1, 1] } : {}}
               style={{
                 padding: "12px 24px",
                 borderRadius: "8px",
                 border: "none",
-                background: "#ffd966",
+                background: "#2fb3ff",
                 color: "#1a2a3a",
                 fontWeight: "bold",
                 cursor: "pointer",
@@ -275,7 +276,7 @@ export default function Footer() {
             <motion.p
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              style={{ marginTop: "10px", color: "#ffd966", fontSize: "0.85rem" }}
+              style={{ marginTop: "10px", color: "#2fb3ff", fontSize: "0.85rem" }}
             >
               Thanks for subscribing.
             </motion.p>
@@ -296,7 +297,7 @@ export default function Footer() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
-            style={{ marginBottom: "1rem", color: "#ffd966" }}
+            style={{ marginBottom: "1rem", color: "#2fb3ff" }}
           >
             Connect With Us
           </motion.h4>
@@ -358,15 +359,16 @@ export default function Footer() {
             transform: "translateX(-50%)",
             width: "0%",
             height: "1px",
-            background: "#ffd966",
+            background: "#2fb3ff",
           }}
           animate={{ width: "50%" }}
           transition={{ delay: 0.9, duration: 0.8 }}
         />
-        <div style={{ display: "flex", justifyContent: "center", gap: "20px", flexWrap: "wrap", fontSize: "0.85rem" }}>
-          <motion.p whileHover={{ color: "#ffd966" }}>&copy; 2025 | Akili Bridge | All Rights Reserved.</motion.p>
-          <motion.p whileHover={{ color: "#ffd966" }}>StaffWEBMAIL | WebAdmin</motion.p>
-          <motion.p whileHover={{ color: "#ffd966" }}>Built by Akili Bridge</motion.p>
+        <div style={{ display: "flex", justifyContent: "center", gap: "12px", flexWrap: "wrap", fontSize: "0.85rem", alignItems: "center" }}>
+          <img src={footerLogo} alt="AkiliBridge logo" style={{ height: "24px" }} />
+          <motion.p whileHover={{ color: "#2fb3ff" }}>&copy; 2025 | AkiliBridge | All Rights Reserved.</motion.p>
+          <motion.p whileHover={{ color: "#2fb3ff" }}>StaffWEBMAIL | WebAdmin</motion.p>
+          <motion.p whileHover={{ color: "#2fb3ff" }}>Built by AkiliBridge</motion.p>
         </div>
       </motion.div>
 

@@ -39,7 +39,7 @@ export default function Fellowship() {
           advancements will remain out of reach.
         </p>
         <p>
-          At Akili Bridge, we believe Africa needs more researchers — not just in
+          At AkiliBridge, we believe Africa needs more researchers — not just in
           numbers, but in quality, innovation, and impact. Our programs are
           designed to change this reality by training and mentoring the brightest
           young minds across the continent.

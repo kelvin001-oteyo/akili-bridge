@@ -180,7 +180,7 @@ useEffect(() => {
             What's New
           </h1>
           <p className="hero-description">
-            Stay updated with the latest news, announcements, and events from Akili Bridge.
+            Stay updated with the latest news, announcements, and events from AkiliBridge.
             Discover opportunities, success stories, and groundbreaking research from our community.
           </p>
         </motion.div>
@@ -780,7 +780,7 @@ useEffect(() => {
         .subscribe-button {
           width: 100%;
           padding: 0.8rem;
-          background: linear-gradient(90deg, #ff6a00, #ffb347);
+          background: linear-gradient(90deg, #ff6a00, #c68a3d);
           border: none;
           border-radius: 10px;
           color: #ffffff;

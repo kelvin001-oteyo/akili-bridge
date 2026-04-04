@@ -142,7 +142,7 @@ export default function WhatWeDo() {
             What We Do
           </h1>
           <p className="hero-description">
-            At Akili Bridge, we nurture the next generation of African researcher
+            At AkiliBridge, we nurture the next generation of African researcher
             scholars through fellowship programs, training workshops, and
             mentorship opportunities. Our comprehensive approach empowers emerging
             researchers to drive innovation and create lasting impact across the continent.
@@ -395,7 +395,7 @@ export default function WhatWeDo() {
           display: block;
           font-size: 2rem;
           font-weight: 800;
-          background: linear-gradient(135deg, #ff6a00, #ffb347);
+          background: linear-gradient(135deg, #ff6a00, #c68a3d);
           background-clip: text;
           -webkit-background-clip: text;
           color: transparent;
@@ -527,7 +527,7 @@ export default function WhatWeDo() {
           display: block;
           width: 60px;
           height: 3px;
-          background: linear-gradient(90deg, #ff6a00, #ffb347);
+          background: linear-gradient(90deg, #ff6a00, #c68a3d);
           margin: 0.5rem auto 0;
           border-radius: 3px;
         }
@@ -555,7 +555,7 @@ export default function WhatWeDo() {
         .impact-number {
           font-size: 2.5rem;
           font-weight: 800;
-          background: linear-gradient(135deg, #ff6a00, #ffb347);
+          background: linear-gradient(135deg, #ff6a00, #c68a3d);
           background-clip: text;
           -webkit-background-clip: text;
           color: transparent;
@@ -576,7 +576,7 @@ export default function WhatWeDo() {
         .cta-button {
           position: relative;
           padding: 1rem 2.5rem;
-          background: linear-gradient(90deg, #ff6a00, #ffb347);
+          background: linear-gradient(90deg, #ff6a00, #c68a3d);
           border: none;
           border-radius: 50px;
           color: #ffffff;

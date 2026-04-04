@@ -373,7 +373,7 @@ export default function ForFellows() {
           display: block;
           font-size: clamp(1.2rem, 4vw, 1.8rem);
           font-weight: 500;
-          background: linear-gradient(135deg, #ff6a00, #ffb347);
+          background: linear-gradient(135deg, #ff6a00, #c68a3d);
           background-clip: text;
           -webkit-background-clip: text;
           color: transparent;
@@ -420,7 +420,7 @@ export default function ForFellows() {
           font-size: 1.5rem;
           font-weight: 700;
           margin: 0;
-          background: linear-gradient(135deg, #ff6a00, #ffb347);
+          background: linear-gradient(135deg, #ff6a00, #c68a3d);
           background-clip: text;
           -webkit-background-clip: text;
           color: transparent;
@@ -473,7 +473,7 @@ export default function ForFellows() {
         .step-number {
           width: 32px;
           height: 32px;
-          background: linear-gradient(135deg, #ff6a00, #ffb347);
+          background: linear-gradient(135deg, #ff6a00, #c68a3d);
           border-radius: 50%;
           display: flex;
           align-items: center;
@@ -512,7 +512,7 @@ export default function ForFellows() {
           display: block;
           width: 60px;
           height: 3px;
-          background: linear-gradient(90deg, #ff6a00, #ffb347);
+          background: linear-gradient(90deg, #ff6a00, #c68a3d);
           margin: 0.5rem auto 0;
           border-radius: 3px;
         }
@@ -590,7 +590,7 @@ export default function ForFellows() {
         .stat-number {
           font-size: 3rem;
           font-weight: 800;
-          background: linear-gradient(135deg, #ff6a00, #ffb347);
+          background: linear-gradient(135deg, #ff6a00, #c68a3d);
           background-clip: text;
           -webkit-background-clip: text;
           color: transparent;
@@ -647,7 +647,7 @@ export default function ForFellows() {
           font-size: 1.1rem;
           font-weight: 600;
           margin: 0;
-          color: #ffb347;
+          color: #c68a3d;
         }
 
         .faq-answer {
@@ -667,7 +667,7 @@ export default function ForFellows() {
         .cta-button {
           position: relative;
           padding: 1rem 2.5rem;
-          background: linear-gradient(90deg, #ff6a00, #ffb347);
+          background: linear-gradient(90deg, #ff6a00, #c68a3d);
           border: none;
           border-radius: 50px;
           color: #ffffff;

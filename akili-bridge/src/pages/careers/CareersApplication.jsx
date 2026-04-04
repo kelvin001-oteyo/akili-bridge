@@ -174,14 +174,14 @@ export default function CareersApplication() {
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <div className="header-badge">
-            <span className="badge-icon">🚀</span>
+            <img className="badge-icon" src="/akili_bridge_social_icon_256.png" alt="AkiliBridge icon" />
             Join Our Team
           </div>
           <h1 className="page-title">
             Careers Application Form
           </h1>
           <p className="header-description">
-            Submit your application to join Akili Bridge and become part of Africa's research revolution.
+            Submit your application to join AkiliBridge and become part of Africa's research revolution.
             We're looking for passionate, driven individuals ready to make an impact.
           </p>
         </motion.div>
@@ -197,7 +197,7 @@ export default function CareersApplication() {
           {/* Personal Information */}
           <motion.div className="form-section" variants={itemVariants}>
             <div className="section-header">
-              <span className="section-icon">👤</span>
+              <img className="section-icon" src="/akili_bridge_social_icon_256.png" alt="Section icon" />
               <h2 className="section-title">Personal Information</h2>
             </div>
             <div className="form-grid">
@@ -243,7 +243,7 @@ export default function CareersApplication() {
           {/* Academic Information */}
           <motion.div className="form-section" variants={itemVariants}>
             <div className="section-header">
-              <span className="section-icon">🎓</span>
+              <img className="section-icon" src="/akili_bridge_social_icon_256.png" alt="Section icon" />
               <h2 className="section-title">Academic Information</h2>
             </div>
             <div className="form-grid">
@@ -313,7 +313,7 @@ export default function CareersApplication() {
           {/* Availability */}
           <motion.div className="form-section" variants={itemVariants}>
             <div className="section-header">
-              <span className="section-icon">⏰</span>
+              <img className="section-icon" src="/akili_bridge_social_icon_256.png" alt="Section icon" />
               <h2 className="section-title">Availability</h2>
             </div>
             <div className="form-grid">
@@ -347,7 +347,7 @@ export default function CareersApplication() {
           {/* Lab Preferences */}
           <motion.div className="form-section" variants={itemVariants}>
             <div className="section-header">
-              <span className="section-icon">🔬</span>
+              <img className="section-icon" src="/akili_bridge_social_icon_256.png" alt="Section icon" />
               <h2 className="section-title">Lab Preferences</h2>
             </div>
             <div className="form-grid">
@@ -385,7 +385,7 @@ export default function CareersApplication() {
           {/* Portfolio & Links */}
           <motion.div className="form-section" variants={itemVariants}>
             <div className="section-header">
-              <span className="section-icon">🔗</span>
+              <img className="section-icon" src="/akili_bridge_social_icon_256.png" alt="Section icon" />
               <h2 className="section-title">Portfolio & Links</h2>
             </div>
             <div className="form-group">
@@ -404,7 +404,7 @@ export default function CareersApplication() {
           {/* File Uploads */}
           <motion.div className="form-section" variants={itemVariants}>
             <div className="section-header">
-              <span className="section-icon">📄</span>
+              <img className="section-icon" src="/akili_bridge_social_icon_256.png" alt="Section icon" />
               <h2 className="section-title">Required Documents</h2>
             </div>
             <div className="uploads-grid">
@@ -635,7 +635,10 @@ export default function CareersApplication() {
         }
 
         .badge-icon {
-          font-size: 1rem;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          object-fit: cover;
         }
 
         .page-title {
@@ -684,14 +687,17 @@ export default function CareersApplication() {
         }
 
         .section-icon {
-          font-size: 1.8rem;
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          object-fit: cover;
         }
 
         .section-title {
           font-size: 1.3rem;
           font-weight: 600;
           margin: 0;
-          background: linear-gradient(135deg, #ff6a00, #ffb347);
+          background: linear-gradient(135deg, #8bd6ff, #2fb3ff);
           background-clip: text;
           -webkit-background-clip: text;
           color: transparent;
@@ -822,7 +828,7 @@ export default function CareersApplication() {
         .submit-button {
           position: relative;
           padding: 1rem 2.5rem;
-          background: linear-gradient(90deg, #ff6a00, #ffb347);
+          background: linear-gradient(90deg, #ff6a00, #c68a3d);
           border: none;
           border-radius: 50px;
           color: #ffffff;
