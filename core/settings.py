@@ -8,8 +8,11 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-secret-key")
 
 DEBUG = False
 
+# ✅ FIXED: Added your domain
 ALLOWED_HOSTS = [
     "akili-bridge.onrender.com",
+    "akilibridge.org",
+    "www.akilibridge.org",
     "localhost",
     "127.0.0.1",
 ]
@@ -25,7 +28,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework.authtoken",
-    "rest_framework_simplejwt",  # Add this if not already present
+    "rest_framework_simplejwt",
     "corsheaders",
     "fellowship",
     "blog",
@@ -44,11 +47,15 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+# ✅ FIXED: Allow your domain in CORS
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "https://akili-bridge.onrender.com",
+    "https://akilibridge.org",
+    "https://www.akilibridge.org",
 ]
+
 CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = "core.urls"
@@ -56,7 +63,7 @@ ROOT_URLCONF = "core.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "frontend", BASE_DIR / "templates"],  # Add templates directory
+        "DIRS": [BASE_DIR / "frontend", BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -111,19 +118,21 @@ REST_FRAMEWORK = {
     ],
 }
 
-# Email Configuration - Update these with your actual email settings
+# ✅ FIXED EMAIL HOST (important!)
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "akilibridgegmail.com"  # Change to your email provider
+EMAIL_HOST = "smtp.gmail.com"  # ✅ corrected
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "your_email@gmail.com")  # Use environment variables
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "your_password")  # Use environment variables
-DEFAULT_FROM_EMAIL = "Akili Bridge <no-reply@akilibridge.com>"
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "your_email@gmail.com")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "your_password")
+DEFAULT_FROM_EMAIL = "Akili Bridge <no-reply@akilibridge.org>"
 
-# Frontend URL for email links
-FRONTEND_URL = os.environ.get("FRONTEND_URL", "https://akili-bridge.onrender.com")
+# ✅ UPDATED FRONTEND URL
+FRONTEND_URL = os.environ.get(
+    "FRONTEND_URL",
+    "https://akilibridge.org"
+)
 
-# JWT Settings
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
@@ -133,8 +142,3 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',),
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
 }
-
-# Optional: For development, you can use console email backend
-# Uncomment this for development to see emails in console
-# if DEBUG:
-#     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
