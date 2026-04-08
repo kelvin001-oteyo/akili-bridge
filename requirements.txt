@@ -1,8 +1,9 @@
-djangorestframework==3.17.0        ✅ OK (latest)
-djangorestframework-simplejwt==5.5.1 ✅ OK (latest)
-django-cors-headers==4.9.0         ✅ OK (latest)
-gunicorn==25.3.0                   ✅ OK (latest)
-whitenoise==6.12.0                 ✅ OK (latest)
-dj-database-url==2.1.0             ✅ OK
-psycopg2-binary==2.9.9             ✅ OK
-Pillow==12.1.1                     ✅ OK (latest)
+Django==5.1.7
+djangorestframework==3.17.0
+djangorestframework-simplejwt==5.5.1
+django-cors-headers==4.9.0
+gunicorn==25.3.0
+whitenoise==6.12.0
+dj-database-url==2.1.0
+psycopg2-binary==2.9.9
+Pillow==12.1.1
