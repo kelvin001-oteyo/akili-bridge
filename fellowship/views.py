@@ -75,10 +75,10 @@ class RegisterView(generics.CreateAPIView):
                     to=[user.email],
                 )
                 msg.attach_alternative(html_content, "text/html")
-                msg.send(fail_silently=False)
+                msg.send(fail_silently=True)  # ✅ Changed to True
             except Exception as exc:
                 # Log for debugging in server logs but allow user creation
-                print(f"Email send failed: {exc}")
+                print(f"Email send failed (non-critical): {exc}")
             
         return response
 
@@ -130,9 +130,9 @@ class FellowshipApplicationViewSet(viewsets.ModelViewSet):
                 to=[application.email],
             )
             msg.attach_alternative(html_content, "text/html")
-            msg.send(fail_silently=False)
+            msg.send(fail_silently=True)  # ✅ Changed to True
         except Exception as exc:
-            print(f"Fellowship application email send failed: {exc}")
+            print(f"Fellowship application email send failed (non-critical): {exc}")
 
 
 # Dashboard content API
@@ -188,9 +188,9 @@ class UndergraduateApplicationViewSet(viewsets.ModelViewSet):
                 to=[application.email],
             )
             msg.attach_alternative(html_content, "text/html")
-            msg.send(fail_silently=False)
+            msg.send(fail_silently=True)  # ✅ Changed to True
         except Exception as exc:
-            print(f"Undergraduate application email send failed: {exc}")
+            print(f"Undergraduate application email send failed (non-critical): {exc}")
         return application
 
 
@@ -274,9 +274,9 @@ class RequestEmailConfirmationView(APIView):
                     to=[user.email],
                 )
                 msg.attach_alternative(html_content, "text/html")
-                msg.send(fail_silently=False)
+                msg.send(fail_silently=True)  # ✅ Changed to True
             except Exception as exc:
-                print(f"Email confirmation send failed: {exc}")
+                print(f"Email confirmation send failed (non-critical): {exc}")
             
             return Response({"message": "Confirmation email sent"}, status=status.HTTP_200_OK)
             
@@ -344,10 +344,10 @@ class RequestPasswordResetView(APIView):
                     to=[user.email],
                 )
                 msg.attach_alternative(html_content, "text/html")
-                msg.send(fail_silently=False)
+                msg.send(fail_silently=True)  # ✅ Changed to True
             except Exception as exc:
                 # Log and continue; user should still be able to reset with the token
-                print(f"Password reset email send failed: {exc}")
+                print(f"Password reset email send failed (non-critical): {exc}")
             
             return Response({"message": "Password reset email sent"}, status=status.HTTP_200_OK)
             
@@ -401,16 +401,19 @@ class ResetPasswordView(APIView):
             # Delete the used token
             reset_token.delete()
             
-            # Optional: Send confirmation email
-            html_content = render_to_string("emails/password_reset_confirmation.html", {"user": user})
-            msg = EmailMultiAlternatives(
-                subject="Password Reset Successful",
-                body="Your password has been successfully reset.",
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                to=[user.email],
-            )
-            msg.attach_alternative(html_content, "text/html")
-            msg.send()
+            # Optional: Send confirmation email (fail silently)
+            try:
+                html_content = render_to_string("emails/password_reset_confirmation.html", {"user": user})
+                msg = EmailMultiAlternatives(
+                    subject="Password Reset Successful",
+                    body="Your password has been successfully reset.",
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to=[user.email],
+                )
+                msg.attach_alternative(html_content, "text/html")
+                msg.send(fail_silently=True)  # ✅ Changed to True
+            except Exception as exc:
+                print(f"Password reset confirmation email failed (non-critical): {exc}")
             
             return Response({"message": "Password reset successful"}, status=status.HTTP_200_OK)
             
