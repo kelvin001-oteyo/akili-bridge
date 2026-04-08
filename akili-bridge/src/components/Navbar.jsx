@@ -114,53 +114,17 @@ export default function Navbar() {
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        {/* Animated Background Gradient */}
-        <div className="navbar-bg">
-          <div className="navbar-gradient"></div>
-          <div className="navbar-particles">
-            {[...Array(15)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="navbar-particle"
-                initial={{
-                  x: Math.random() * window.innerWidth,
-                  y: Math.random() * 100,
-                  opacity: 0
-                }}
-                animate={{
-                  y: [null, -50, -100],
-                  opacity: [0, 0.5, 0],
-                  x: [null, Math.random() * 100 - 50]
-                }}
-                transition={{
-                  duration: Math.random() * 3 + 2,
-                  repeat: Infinity,
-                  delay: Math.random() * 5,
-                  ease: "linear"
-                }}
-              />
-            ))}
-          </div>
-        </div>
+        {/* Simple static background - removed animated gradient and particles */}
+        <div className="navbar-bg"></div>
 
         <div className="navbar-container">
-          {/* Logo with Animation */}
-          <MotionLink
-            to="/"
-            className="logo"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={closeMenus}
-          >
+          {/* SIMPLIFIED LOGO - No synthetic animations */}
+          <Link to="/" className="logo" onClick={closeMenus}>
             <img src={logo} alt="AkiliBridge logo" className="logo-image" />
-              <motion.span className="logo-text" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>Akili</motion.span><motion.span className="logo-highlight" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>Bridge</motion.span>
-              <motion.div
-                className="logo-dot"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-              transition={{ delay: 0.3, type: "spring" }}
-            />
-          </MotionLink>
+            <span className="logo-text">
+              Akili<span className="logo-highlight">Bridge</span>
+            </span>
+          </Link>
 
           {/* Desktop Navigation */}
           <ul className="nav-links">
@@ -216,20 +180,15 @@ export default function Navbar() {
               >
                 {item.items ? (
                   <>
-                    <motion.button
+                    <button
                       className="dropdown-btn"
                       onClick={() => toggleMenu(item.key)}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
                     >
                       {item.name}
-                      <motion.span
-                        aria-hidden
-                        animate={{ rotate: openMenu === item.key ? 180 : 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="dropdown-arrow"
+                      <span
+                        className={`dropdown-arrow ${openMenu === item.key ? "open" : ""}`}
                       />
-                    </motion.button>
+                    </button>
                     <AnimatePresence>
                       {openMenu === item.key && (
                         <motion.ul
@@ -256,8 +215,8 @@ export default function Navbar() {
                   <MotionLink
                     to={item.path}
                     onClick={closeMenus}
-                    whileHover={{ scale: 1.05, color: "#d9b26a" }}
-                    whileTap={{ scale: 0.95 }}
+                    whileHover={{ color: "#7abfff" }}
+                    whileTap={{ scale: 0.98 }}
                   >
                     {item.name}
                   </MotionLink>
@@ -286,14 +245,12 @@ export default function Navbar() {
                   animate="visible"
                   custom={11}
                 >
-                  <motion.button
+                  <button
                     onClick={handleLogout}
                     className="logout-btn"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
                   >
                     Logout
-                  </motion.button>
+                  </button>
                 </motion.li>
               </>
             ) : (
@@ -308,8 +265,8 @@ export default function Navbar() {
                   to="/auth"
                   onClick={closeMenus}
                   className="auth-link"
-                  whileHover={{ scale: 1.05, color: "#d9b26a" }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ color: "#7abfff" }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   Register / Login
                 </MotionLink>
@@ -318,24 +275,14 @@ export default function Navbar() {
           </ul>
 
           {/* Mobile Menu Button */}
-          <motion.button
-            className="mobile-menu-btn"
+          <button
+            className={`mobile-menu-btn ${mobileMenuOpen ? "open" : ""}`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            whileTap={{ scale: 0.9 }}
           >
-            <motion.span
-              animate={mobileMenuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
-              transition={{ duration: 0.3 }}
-            />
-            <motion.span
-              animate={mobileMenuOpen ? { opacity: 0 } : { opacity: 1 }}
-              transition={{ duration: 0.3 }}
-            />
-            <motion.span
-              animate={mobileMenuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
-              transition={{ duration: 0.3 }}
-            />
-          </motion.button>
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
       </motion.nav>
 
@@ -359,12 +306,7 @@ export default function Navbar() {
             >
               <div className="mobile-menu-header">
                 <div className="mobile-logo">AkiliBridge</div>
-                <motion.button
-                  className="mobile-close-btn"
-                  onClick={closeMenus}
-                  aria-label="Close menu"
-                  whileTap={{ scale: 0.9 }}
-                />
+                <button className="mobile-close-btn" onClick={closeMenus} aria-label="Close menu" />
               </div>
               <ul className="mobile-nav-links">
                 {[
