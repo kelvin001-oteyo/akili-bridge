@@ -14,7 +14,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-secret-key")
 # ============================================================================
 # SECURITY WARNING: Don't run with debug turned on in production!
 # ============================================================================
-DEBUG = os.environ.get("DEBUG", "True") == "True"  # Changed default to True for local
+DEBUG = os.environ.get("DEBUG", "True") == "True"
 
 # ============================================================================
 # ALLOWED HOSTS - Add your production domains here
@@ -59,7 +59,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",  # Must be at the top
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # For static files
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -71,7 +71,10 @@ MIDDLEWARE = [
 # ============================================================================
 # CORS Configuration (Cross-Origin Resource Sharing)
 # ============================================================================
-# Local development CORS settings (HTTP)
+# Allow all origins for production testing (will restrict after confirming it works)
+CORS_ALLOW_ALL_ORIGINS = True  # Temporarily allow all origins
+
+# Also explicitly list allowed origins
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
@@ -105,11 +108,10 @@ CORS_ALLOW_HEADERS = [
     'x-requested-with',
 ]
 
-# For local development only - allows all origins (REMOVE FOR PRODUCTION IF NOT NEEDED)
-# Set this to False in production
-CORS_ALLOW_ALL_ORIGINS = DEBUG  # Only allows all origins when DEBUG=True
+# Preflight caching for better performance
+CORS_PREFLIGHT_MAX_AGE = 86400  # 24 hours
 
-FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:5173")
+FRONTEND_URL = os.environ.get("FRONTEND_URL", "https://akilibridge.org")
 
 # ============================================================================
 # URL Configuration
@@ -139,7 +141,6 @@ WSGI_APPLICATION = "core.wsgi.application"
 # ============================================================================
 # Database Configuration
 # ============================================================================
-# Uses PostgreSQL on Render, SQLite locally as fallback
 DATABASES = {
     "default": dj_database_url.config(
         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
@@ -176,7 +177,6 @@ STATICFILES_DIRS = [
 ]
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# Media files (User uploaded content)
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
@@ -188,7 +188,7 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.AllowAny",  # Changed to AllowAny for testing
+        "rest_framework.permissions.AllowAny",
     ],
 }
 
@@ -206,7 +206,7 @@ SIMPLE_JWT = {
 }
 
 # ============================================================================
-# Email Configuration (Gmail SMTP)
+# Email Configuration
 # ============================================================================
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
@@ -225,21 +225,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Production Security Settings (Only enabled when DEBUG=False)
 # ============================================================================
 if not DEBUG:
-    # HTTPS Security
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    
-    # Additional Security Headers
     SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
-    SECURE_HSTS_SECONDS = 31536000  # 1 year
+    SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
-    
-    # Session Security
     SESSION_COOKIE_HTTPONLY = True
     CSRF_COOKIE_HTTPONLY = True
-    
-    # Clickjacking Protection
     X_FRAME_OPTIONS = 'DENY'
