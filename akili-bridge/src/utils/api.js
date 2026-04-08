@@ -1,14 +1,14 @@
 // src/utils/api.js
 
-// Resolve API base:
-// 1) explicit VITE_API_URL (recommended)
-// 2) same-origin when running from a deployed domain
-// 3) local Django dev server as sensible default
-const API_URL =
-  import.meta.env.VITE_API_URL ||
-  (typeof window !== "undefined" && window.location.origin.includes("onrender.com")
-    ? window.location.origin
-    : "http://127.0.0.1:8000");
+// Resolve API base using environment variable
+// Set VITE_API_URL in .env.production for live site
+// Defaults to localhost for development
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
+// Optional: Add console log to debug (remove in production)
+if (import.meta.env.DEV) {
+  console.log(`API_URL: ${API_URL}`);
+}
 
 function getCookie(name) {
   return document.cookie
