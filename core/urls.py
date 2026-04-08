@@ -4,35 +4,32 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from core.views import frontend
-from fellowship.views import LoginView, RegisterView
-from rest_framework_simplejwt.views import TokenRefreshView
 
 urlpatterns = [
     # Django admin
     path("admin/", admin.site.urls),
     
-    # API endpoints
-    path("api/fellowship/", include("fellowship.urls")),
+    # API endpoints - All under /api/
+    path("api/", include("fellowship.urls")),  # Fellowship includes auth and all fellowship endpoints
     path("api/blog/", include("blog.urls")),
     path("api/resources/", include("resources.urls")),
-    path("api/auth/register/", RegisterView.as_view(), name="register"),
-    path("api/auth/login/", LoginView.as_view(), name="login"),
-    path("api/auth/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     
-    # React frontend routes (explicitly list the ones you need)
-    path("", frontend),  # Home
-    path("admin-dashboard/", frontend),  # Admin dashboard
-    path("dashboard/", frontend),  # User dashboard
-    path("about/", frontend),  # About pages
-    path("what-we-do/", frontend),  # What we do pages
-    path("apply/", frontend),  # Apply pages
-    path("labs/", frontend),  # Labs
-    path("careers/", frontend),  # Careers pages
-    path("news/", frontend),  # News
-    path("auth/", frontend),  # Auth pages
-    path("blog/", frontend),  # Blog
+    # React frontend routes
+    path("", frontend, name="home"),
+    path("admin-dashboard/", frontend, name="admin-dashboard"),
+    path("dashboard/", frontend, name="dashboard"),
+    path("about/", frontend, name="about"),
+    path("what-we-do/", frontend, name="what-we-do"),
+    path("apply/", frontend, name="apply"),
+    path("labs/", frontend, name="labs"),
+    path("careers/", frontend, name="careers"),
+    path("news/", frontend, name="news"),
+    path("auth/", frontend, name="auth"),
+    path("blog/", frontend, name="blog"),
+    path("confirm-email/<uuid:token>/", frontend, name="confirm-email"),
+    path("reset-password/<uuid:token>/", frontend, name="reset-password"),
     
-    # Catch-all for any other frontend routes
+    # Catch-all for any other frontend routes (excludes API, admin, static, media)
     re_path(r"^(?!api/|admin/|static/|media/).*$", frontend),
 ]
 

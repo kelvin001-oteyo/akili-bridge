@@ -24,12 +24,11 @@ router.register(r"undergraduate-applications", UndergraduateApplicationViewSet, 
 router.register(r"newsletter-subscriptions", NewsletterSubscriptionViewSet, basename="newsletter-subscriptions")
 router.register(r"notifications", NotificationViewSet, basename="notifications")
 
-# Custom URL patterns for authentication and other non-router views
-custom_urlpatterns = [
-    # Authentication endpoints
+# Authentication endpoints (will be under /auth/ prefix)
+auth_urlpatterns = [
     path("register/", RegisterView.as_view(), name="register"),
     path("login/", LoginView.as_view(), name="login"),
-    path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     
     # Email confirmation endpoints
     path("request-email-confirmation/", RequestEmailConfirmationView.as_view(), name="request-email-confirmation"),
@@ -41,5 +40,7 @@ custom_urlpatterns = [
     path("reset-password/", ResetPasswordView.as_view(), name="reset-password"),
 ]
 
-# Combine router URLs with custom URLs
-urlpatterns = custom_urlpatterns + router.urls
+# Combine all URL patterns
+urlpatterns = [
+    path('auth/', include(auth_urlpatterns)),  # All auth endpoints under /auth/
+] + router.urls

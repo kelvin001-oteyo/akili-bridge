@@ -14,7 +14,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-secret-key")
 # ============================================================================
 # SECURITY WARNING: Don't run with debug turned on in production!
 # ============================================================================
-DEBUG = os.environ.get("DEBUG", "False") == "True"
+DEBUG = os.environ.get("DEBUG", "True") == "True"  # Changed default to True for local
 
 # ============================================================================
 # ALLOWED HOSTS - Add your production domains here
@@ -71,27 +71,28 @@ MIDDLEWARE = [
 # ============================================================================
 # CORS Configuration (Cross-Origin Resource Sharing)
 # ============================================================================
-# Determine if we're in production
-IS_PRODUCTION = os.environ.get("RENDER", "False") == "True" or DEBUG is False
-
-if IS_PRODUCTION:
-    # Production CORS settings (HTTPS)
-    CORS_ALLOWED_ORIGINS = [
-        "https://akili-bridge.onrender.com",
-        "https://akilibridge.org",
-        "https://www.akilibridge.org",
-    ]
-    FRONTEND_URL = os.environ.get("FRONTEND_URL", "https://akilibridge.org")
-else:
-    # Local development CORS settings (HTTP)
-    CORS_ALLOWED_ORIGINS = [
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-    ]
-    FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:5173")
+# Local development CORS settings (HTTP)
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "https://akili-bridge.onrender.com",
+    "https://akilibridge.org",
+    "https://www.akilibridge.org",
+]
 
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
+
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS',
+]
+
 CORS_ALLOW_HEADERS = [
     'accept',
     'accept-encoding',
@@ -103,6 +104,12 @@ CORS_ALLOW_HEADERS = [
     'x-csrftoken',
     'x-requested-with',
 ]
+
+# For local development only - allows all origins (REMOVE FOR PRODUCTION IF NOT NEEDED)
+# Set this to False in production
+CORS_ALLOW_ALL_ORIGINS = DEBUG  # Only allows all origins when DEBUG=True
+
+FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:5173")
 
 # ============================================================================
 # URL Configuration
@@ -181,7 +188,7 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+        "rest_framework.permissions.AllowAny",  # Changed to AllowAny for testing
     ],
 }
 
@@ -208,6 +215,11 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = "Akili Bridge <no-reply@akilibridge.org>"
+
+# ============================================================================
+# Default Auto Field
+# ============================================================================
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # ============================================================================
 # Production Security Settings (Only enabled when DEBUG=False)
