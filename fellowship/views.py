@@ -54,16 +54,15 @@ class RegisterView(generics.CreateAPIView):
             response.data['access'] = str(refresh.access_token)
             response.data['refresh'] = str(refresh)
             
-            # Send email confirmation
-            token = EmailConfirmationToken.objects.create(
-                user=user,
-                expires_at=timezone.now() + timedelta(hours=24)
-            )
-            
-            confirmation_link = f"{settings.FRONTEND_URL}/confirm-email/{token.token}"
-            
-            # Send confirmation email; don't fail registration if email backend is misconfigured
+            # Send email confirmation (completely optional - won't block registration)
             try:
+                token = EmailConfirmationToken.objects.create(
+                    user=user,
+                    expires_at=timezone.now() + timedelta(hours=24)
+                )
+                
+                confirmation_link = f"{settings.FRONTEND_URL}/confirm-email/{token.token}"
+                
                 html_content = render_to_string("emails/welcome_email.html", {
                     "user": user,
                     "confirmation_link": confirmation_link
@@ -75,10 +74,10 @@ class RegisterView(generics.CreateAPIView):
                     to=[user.email],
                 )
                 msg.attach_alternative(html_content, "text/html")
-                msg.send(fail_silently=True)  # ✅ Changed to True
+                msg.send(fail_silently=True)
             except Exception as exc:
-                # Log for debugging in server logs but allow user creation
-                print(f"Email send failed (non-critical): {exc}")
+                # Log but don't break registration
+                print(f"Email send skipped: {exc}")
             
         return response
 
@@ -116,7 +115,7 @@ class FellowshipApplicationViewSet(viewsets.ModelViewSet):
         else:
             serializer.save()
         
-        # Best-effort notification email; don't break submission if email fails
+        # Best-effort notification email - won't break submission
         try:
             application = serializer.instance
             html_content = render_to_string(
@@ -130,9 +129,9 @@ class FellowshipApplicationViewSet(viewsets.ModelViewSet):
                 to=[application.email],
             )
             msg.attach_alternative(html_content, "text/html")
-            msg.send(fail_silently=True)  # ✅ Changed to True
+            msg.send(fail_silently=True)
         except Exception as exc:
-            print(f"Fellowship application email send failed (non-critical): {exc}")
+            print(f"Fellowship application email skipped: {exc}")
 
 
 # Dashboard content API
@@ -175,7 +174,7 @@ class UndergraduateApplicationViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         application = serializer.save()
         
-        # Best-effort email; log failures but keep submission
+        # Best-effort email - won't break submission
         try:
             html_content = render_to_string(
                 "emails/application_received.html",
@@ -188,9 +187,9 @@ class UndergraduateApplicationViewSet(viewsets.ModelViewSet):
                 to=[application.email],
             )
             msg.attach_alternative(html_content, "text/html")
-            msg.send(fail_silently=True)  # ✅ Changed to True
+            msg.send(fail_silently=True)
         except Exception as exc:
-            print(f"Undergraduate application email send failed (non-critical): {exc}")
+            print(f"Undergraduate application email skipped: {exc}")
         return application
 
 
@@ -274,9 +273,9 @@ class RequestEmailConfirmationView(APIView):
                     to=[user.email],
                 )
                 msg.attach_alternative(html_content, "text/html")
-                msg.send(fail_silently=True)  # ✅ Changed to True
+                msg.send(fail_silently=True)
             except Exception as exc:
-                print(f"Email confirmation send failed (non-critical): {exc}")
+                print(f"Email confirmation skipped: {exc}")
             
             return Response({"message": "Confirmation email sent"}, status=status.HTTP_200_OK)
             
@@ -335,7 +334,7 @@ class RequestPasswordResetView(APIView):
                 "reset_link": reset_link
             })
             
-            # Try sending email; do not fail if email backend is misconfigured
+            # Try sending email - won't fail
             try:
                 msg = EmailMultiAlternatives(
                     subject="Password Reset Request",
@@ -344,10 +343,9 @@ class RequestPasswordResetView(APIView):
                     to=[user.email],
                 )
                 msg.attach_alternative(html_content, "text/html")
-                msg.send(fail_silently=True)  # ✅ Changed to True
+                msg.send(fail_silently=True)
             except Exception as exc:
-                # Log and continue; user should still be able to reset with the token
-                print(f"Password reset email send failed (non-critical): {exc}")
+                print(f"Password reset email skipped: {exc}")
             
             return Response({"message": "Password reset email sent"}, status=status.HTTP_200_OK)
             
@@ -401,7 +399,7 @@ class ResetPasswordView(APIView):
             # Delete the used token
             reset_token.delete()
             
-            # Optional: Send confirmation email (fail silently)
+            # Optional: Send confirmation email (won't break)
             try:
                 html_content = render_to_string("emails/password_reset_confirmation.html", {"user": user})
                 msg = EmailMultiAlternatives(
@@ -411,9 +409,9 @@ class ResetPasswordView(APIView):
                     to=[user.email],
                 )
                 msg.attach_alternative(html_content, "text/html")
-                msg.send(fail_silently=True)  # ✅ Changed to True
+                msg.send(fail_silently=True)
             except Exception as exc:
-                print(f"Password reset confirmation email failed (non-critical): {exc}")
+                print(f"Password reset confirmation email skipped: {exc}")
             
             return Response({"message": "Password reset successful"}, status=status.HTTP_200_OK)
             
