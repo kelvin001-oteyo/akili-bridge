@@ -432,7 +432,7 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Stats Section with Enhanced Animations */}
+      {/* Stats Section with Enhanced Animations - REMOVED THE BLUE UNDERLINE EFFECT */}
       <motion.section
         className="home-section stats-section"
         style={{
@@ -458,22 +458,8 @@ export default function Home() {
               variants={fadeInUp}
               className="highlight-text"
             >
-              <motion.span
-                initial={{ backgroundSize: "0% 100%" }}
-                whileInView={{ backgroundSize: "100% 100%" }}
-                transition={{ duration: 1, delay: 0.5 }}
-                style={{
-                  background: "linear-gradient(120deg, #2fb3ff 0%, #2fb3ff 100%)",
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "0% 100%",
-                  backgroundPosition: "0 90%",
-                  transition: "background-size 0.3s",
-                  padding: "0 4px",
-                }}
-              >
-                Africa contributes less than 1% of global research output
-              </motion.span>{" "}
-              despite being home to 17% of the world's population. Without a strong research
+              {/* REMOVED: The blue underline effect at the start of sentence */}
+              Africa contributes less than 1% of global research output despite being home to 17% of the world's population. Without a strong research
               foundation, scientific breakthroughs, innovation, and technological
               advancements will remain out of reach.
             </motion.p>
