@@ -116,7 +116,7 @@ export default function Home() {
 
   return (
     <div className="home-page" ref={containerRef}>
-      {/* Hero Section with Enhanced Animations */}
+      {/* Hero Section with Enhanced Animations - FIXED VISIBILITY */}
       <motion.section
         className="home-hero"
         style={{
@@ -125,7 +125,13 @@ export default function Home() {
           backgroundImage: "url('https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2070&auto=format')",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          backgroundAttachment: "fixed"
+          backgroundAttachment: "fixed",
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          position: "relative",
+          overflow: "hidden"
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -159,23 +165,43 @@ export default function Home() {
           />
         ))}
 
-        <div className="hero-overlay" />
+        <div className="hero-overlay" style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: "linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 100%)",
+          zIndex: 1
+        }} />
         
         <motion.div
           className="hero-content"
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
+          style={{
+            position: "relative",
+            zIndex: 2,
+            textAlign: "center",
+            color: "white",
+            maxWidth: "1200px",
+            margin: "0 auto",
+            padding: "2rem",
+            width: "100%"
+          }}
         >
           <motion.div
             variants={fadeInUp}
             className="hero-logo-container"
             whileHover={{ scale: 1.05 }}
+            style={{ marginBottom: "2rem" }}
           >
             <motion.img
               src={brandIcon}
               alt="AkiliBridge"
               className="hero-logo"
+              style={{ width: "80px", height: "80px", borderRadius: "50%" }}
               animate={{
                 rotate: [0, 5, -5, 0],
               }}
@@ -187,12 +213,13 @@ export default function Home() {
             />
           </motion.div>
           
-          <motion.h1 variants={fadeInUp}>
+          <motion.h1 variants={fadeInUp} style={{ fontSize: "clamp(2.5rem, 8vw, 5rem)", marginBottom: "1rem", fontWeight: "bold" }}>
             <motion.span
               className="hero-title-word"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
+              style={{ display: "inline-block" }}
             >
               Akili
             </motion.span>
@@ -201,12 +228,13 @@ export default function Home() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
+              style={{ display: "inline-block", color: "#2fb3ff" }}
             >
               Bridge
             </motion.span>
           </motion.h1>
           
-          <motion.p variants={fadeInUp}>
+          <motion.p variants={fadeInUp} style={{ fontSize: "clamp(1rem, 4vw, 1.5rem)", marginBottom: "2rem", maxWidth: "800px", marginLeft: "auto", marginRight: "auto" }}>
             <motion.span
               animate={{
                 backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
@@ -221,6 +249,8 @@ export default function Home() {
                 backgroundSize: "200% auto",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                fontWeight: "600"
               }}
             >
               Nurturing the Next Generation of African Researcher Scholars
@@ -232,11 +262,20 @@ export default function Home() {
             variants={staggerContainer}
             initial="hidden"
             animate="visible"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "2rem",
+              marginBottom: "3rem",
+              flexWrap: "wrap"
+            }}
           >
             <motion.div 
               className="stat"
               variants={scaleIn}
               whileHover={{ scale: 1.1 }}
+              style={{ textAlign: "center" }}
             >
               <motion.span
                 className="stat-number"
@@ -247,18 +286,20 @@ export default function Home() {
                   stiffness: 200,
                   delay: 0.9 
                 }}
+                style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: "bold", display: "block" }}
               >
                 17%
               </motion.span>
-              <span>of global population</span>
+              <span style={{ fontSize: "clamp(0.8rem, 2vw, 1rem)" }}>of global population</span>
             </motion.div>
             
-            <motion.div className="stat-divider" />
+            <motion.div className="stat-divider" style={{ width: "2px", height: "50px", background: "rgba(255,255,255,0.3)" }} />
             
             <motion.div 
               className="stat"
               variants={scaleIn}
               whileHover={{ scale: 1.1 }}
+              style={{ textAlign: "center" }}
             >
               <motion.span
                 className="stat-number"
@@ -269,10 +310,11 @@ export default function Home() {
                   stiffness: 200,
                   delay: 1.1 
                 }}
+                style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: "bold", display: "block" }}
               >
                 &lt;1%
               </motion.span>
-              <span>of global research</span>
+              <span style={{ fontSize: "clamp(0.8rem, 2vw, 1rem)" }}>of global research</span>
             </motion.div>
           </motion.div>
 
@@ -281,6 +323,14 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5 }}
+            style={{
+              position: "absolute",
+              bottom: "-100px",
+              left: "50%",
+              transform: "translateX(-50%)",
+              textAlign: "center",
+              cursor: "pointer"
+            }}
           >
             <motion.div
               animate={{
@@ -311,10 +361,28 @@ export default function Home() {
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundAttachment: "fixed",
+          minHeight: "100vh",
+          position: "relative"
         }}
       >
-        <div className="section-overlay" />
-        <div className="section-content">
+        <div className="section-overlay" style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: "linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.6) 100%)",
+          zIndex: 1
+        }} />
+        <div className="section-content" style={{
+          position: "relative",
+          zIndex: 2,
+          maxWidth: "1200px",
+          margin: "0 auto",
+          padding: "6rem 2rem",
+          textAlign: "center",
+          color: "white"
+        }}>
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -327,6 +395,14 @@ export default function Home() {
               whileHover={{ 
                 scale: 1.05,
                 boxShadow: "0 0 20px rgba(47, 179, 255, 0.5)"
+              }}
+              style={{
+                display: "inline-block",
+                padding: "0.5rem 1rem",
+                background: "rgba(47, 179, 255, 0.2)",
+                borderRadius: "50px",
+                marginBottom: "1rem",
+                fontSize: "0.9rem"
               }}
             >
               <motion.span
@@ -341,7 +417,7 @@ export default function Home() {
               First Cohort 2025
             </motion.span>
 
-            <motion.h2 variants={fadeInUp}>
+            <motion.h2 variants={fadeInUp} style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", marginBottom: "1rem" }}>
               <motion.span
                 whileHover={{ 
                   color: "#2fb3ff",
@@ -352,7 +428,7 @@ export default function Home() {
               </motion.span>
             </motion.h2>
 
-            <motion.p variants={fadeInUp} className="section-description">
+            <motion.p variants={fadeInUp} className="section-description" style={{ fontSize: "clamp(1rem, 3vw, 1.2rem)", maxWidth: "800px", margin: "0 auto 2rem", lineHeight: "1.6" }}>
               Join the first cohort of our one-year researcher-in-training fellowship
               for undergraduate students in Rwanda, focusing on research skills,
               mentorship, and career development in STEM.
@@ -361,6 +437,13 @@ export default function Home() {
             <motion.div 
               className="fellowship-features"
               variants={staggerContainer}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                flexWrap: "wrap",
+                gap: "1rem",
+                marginBottom: "2rem"
+              }}
             >
               {[
                 { name: "Research Skills", icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" },
@@ -379,6 +462,13 @@ export default function Home() {
                     y: -5,
                   }}
                   whileTap={{ scale: 0.95 }}
+                  style={{
+                    padding: "0.75rem 1.5rem",
+                    background: "rgba(255,255,255,0.1)",
+                    borderRadius: "50px",
+                    cursor: "pointer",
+                    transition: "all 0.3s ease"
+                  }}
                 >
                   <motion.span
                     initial={{ opacity: 0, x: -10 }}
@@ -406,11 +496,25 @@ export default function Home() {
               onClick={() => navigate("/careers/undergraduate")}
               onHoverStart={() => setIsHovering(true)}
               onHoverEnd={() => setIsHovering(false)}
+              style={{
+                padding: "1rem 2rem",
+                fontSize: "1.1rem",
+                background: "linear-gradient(135deg, #2fb3ff, #8a7ff7)",
+                border: "none",
+                borderRadius: "50px",
+                color: "white",
+                cursor: "pointer",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                transition: "all 0.3s ease"
+              }}
             >
               <motion.img 
                 src={brandIcon} 
                 alt="AkiliBridge logo" 
                 className="btn-icon"
+                style={{ width: "24px", height: "24px", borderRadius: "50%" }}
                 animate={isHovering ? { rotate: 360 } : { rotate: 0 }}
                 transition={{ duration: 0.6 }}
               />
@@ -432,39 +536,56 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Stats Section with Enhanced Animations - REMOVED THE BLUE UNDERLINE EFFECT */}
+      {/* Stats Section with Enhanced Animations */}
       <motion.section
         className="home-section stats-section"
         style={{
           backgroundImage: "url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2070&auto=format')",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          backgroundAttachment: "fixed"
+          backgroundAttachment: "fixed",
+          minHeight: "100vh",
+          position: "relative"
         }}
       >
-        <div className="section-overlay dark" />
-        <div className="section-content">
+        <div className="section-overlay dark" style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: "linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.7) 100%)",
+          zIndex: 1
+        }} />
+        <div className="section-content" style={{
+          position: "relative",
+          zIndex: 2,
+          maxWidth: "1200px",
+          margin: "0 auto",
+          padding: "6rem 2rem",
+          color: "white"
+        }}>
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={staggerContainer}
           >
-            <motion.h2 variants={fadeInUp}>
+            <motion.h2 variants={fadeInUp} style={{ fontSize: "clamp(2rem, 5vw, 3rem)", marginBottom: "1.5rem", textAlign: "center" }}>
               Why Africa Needs More Researchers
             </motion.h2>
             
             <motion.p
               variants={fadeInUp}
               className="highlight-text"
+              style={{ fontSize: "clamp(1rem, 3vw, 1.2rem)", maxWidth: "900px", margin: "0 auto 2rem", textAlign: "center", lineHeight: "1.6" }}
             >
-              {/* REMOVED: The blue underline effect at the start of sentence */}
               Africa contributes less than 1% of global research output despite being home to 17% of the world's population. Without a strong research
               foundation, scientific breakthroughs, innovation, and technological
               advancements will remain out of reach.
             </motion.p>
             
-            <motion.p variants={fadeInUp}>
+            <motion.p variants={fadeInUp} style={{ fontSize: "clamp(1rem, 3vw, 1.1rem)", textAlign: "center", marginBottom: "3rem" }}>
               At AkiliBridge, we believe Africa needs more researchers — not just in
               numbers, but in quality, innovation, and impact.
             </motion.p>
@@ -476,6 +597,12 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true }}
             variants={staggerContainer}
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+              gap: "2rem",
+              marginTop: "2rem"
+            }}
           >
             {[
               { 
@@ -514,6 +641,16 @@ export default function Home() {
                   borderColor: item.color,
                 }}
                 whileTap={{ scale: 0.98 }}
+                style={{
+                  background: "rgba(255,255,255,0.1)",
+                  backdropFilter: "blur(10px)",
+                  borderRadius: "20px",
+                  padding: "2rem",
+                  textAlign: "center",
+                  transition: "all 0.3s ease",
+                  cursor: "pointer",
+                  border: "1px solid rgba(255,255,255,0.2)"
+                }}
               >
                 <motion.span 
                   className="impact-icon"
@@ -526,6 +663,7 @@ export default function Home() {
                     repeat: Infinity,
                     repeatDelay: i * 0.5,
                   }}
+                  style={{ display: "inline-block", marginBottom: "1rem" }}
                 >
                   <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: item.color }}>
                     <path d={item.icon}/>
@@ -543,11 +681,12 @@ export default function Home() {
                     damping: 10,
                     delay: 0.9 + i * 0.1,
                   }}
+                  style={{ fontSize: "clamp(2rem, 4vw, 2.5rem)", fontWeight: "bold", display: "block", marginBottom: "0.5rem" }}
                 >
                   {item.number}
                 </motion.span>
                 
-                <span className="impact-label">{item.label}</span>
+                <span className="impact-label" style={{ fontSize: "1rem", opacity: 0.9 }}>{item.label}</span>
               </motion.div>
             ))}
           </motion.div>
@@ -561,22 +700,39 @@ export default function Home() {
           backgroundImage: "url('https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format')",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          backgroundAttachment: "fixed"
+          backgroundAttachment: "fixed",
+          minHeight: "100vh",
+          position: "relative"
         }}
       >
-        <div className="section-overlay gradient" />
-        <div className="section-content">
+        <div className="section-overlay gradient" style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: "linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(47, 179, 255, 0.3) 100%)",
+          zIndex: 1
+        }} />
+        <div className="section-content" style={{
+          position: "relative",
+          zIndex: 2,
+          maxWidth: "1200px",
+          margin: "0 auto",
+          padding: "6rem 2rem",
+          color: "white"
+        }}>
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={staggerContainer}
           >
-            <motion.h2 variants={fadeInUp}>
+            <motion.h2 variants={fadeInUp} style={{ fontSize: "clamp(2rem, 5vw, 3rem)", marginBottom: "1rem", textAlign: "center" }}>
               What's New
             </motion.h2>
             
-            <motion.p variants={fadeInUp}>
+            <motion.p variants={fadeInUp} style={{ fontSize: "clamp(1rem, 3vw, 1.2rem)", textAlign: "center", marginBottom: "3rem" }}>
               Stay updated with the latest from AkiliBridge — workshops, fellowship
               updates, and announcements.
             </motion.p>
@@ -584,6 +740,12 @@ export default function Home() {
             <motion.div
               className="news-grid"
               variants={staggerContainer}
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+                gap: "2rem",
+                marginBottom: "3rem"
+              }}
             >
               {[
                 { 
@@ -621,11 +783,17 @@ export default function Home() {
                   style={{
                     transition: "all 0.3s ease",
                     border: "1px solid rgba(255,255,255,0.1)",
+                    borderRadius: "15px",
+                    padding: "1.5rem",
+                    background: "rgba(255,255,255,0.08)",
+                    backdropFilter: "blur(10px)",
+                    cursor: "pointer",
+                    position: "relative"
                   }}
                 >
                   <motion.span 
                     className="news-type"
-                    style={{ color: news.color }}
+                    style={{ color: news.color, display: "inline-block", marginBottom: "0.5rem", fontSize: "0.9rem", fontWeight: "600" }}
                     whileHover={{ scale: 1.05 }}
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: "6px", display: "inline", verticalAlign: "middle" }}>
@@ -634,14 +802,15 @@ export default function Home() {
                     {news.type}
                   </motion.span>
                   
-                  <h4>{news.title}</h4>
+                  <h4 style={{ fontSize: "1.3rem", marginBottom: "0.5rem", fontWeight: "600" }}>{news.title}</h4>
                   
                   <motion.span 
                     className="news-date"
                     initial={{ opacity: 0.6 }}
                     whileHover={{ opacity: 1 }}
+                    style={{ fontSize: "0.9rem", display: "flex", alignItems: "center", gap: "0.5rem" }}
                   >
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: "5px", display: "inline", verticalAlign: "middle" }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                       <line x1="16" y1="2" x2="16" y2="6"></line>
                       <line x1="8" y1="2" x2="8" y2="6"></line>
@@ -654,6 +823,7 @@ export default function Home() {
                     className="news-arrow"
                     initial={{ opacity: 0, x: -10 }}
                     whileHover={{ opacity: 1, x: 0 }}
+                    style={{ position: "absolute", right: "1.5rem", top: "50%", transform: "translateY(-50%)" }}
                   >
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -675,11 +845,26 @@ export default function Home() {
               }}
               whileTap={{ scale: 0.98 }}
               onClick={() => navigate("/careers/application")}
+              style={{
+                padding: "1rem 2rem",
+                fontSize: "1.1rem",
+                background: "transparent",
+                border: "2px solid white",
+                borderRadius: "50px",
+                color: "white",
+                cursor: "pointer",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                margin: "0 auto",
+                transition: "all 0.3s ease"
+              }}
             >
               <motion.img 
                 src={brandIcon} 
                 alt="AkiliBridge logo" 
                 className="btn-icon"
+                style={{ width: "24px", height: "24px", borderRadius: "50%" }}
                 whileHover={{ rotate: 360 }}
                 transition={{ duration: 0.6 }}
               />
@@ -708,7 +893,7 @@ export default function Home() {
       {/* Subscribe Section with Enhanced Animations */}
       <motion.section
         className="home-section subscribe-section"
-        style={{ backgroundColor: "#152238", color: "#ffffff" }}
+        style={{ backgroundColor: "#152238", color: "#ffffff", minHeight: "60vh", display: "flex", alignItems: "center" }}
       >
         <motion.div
           initial="hidden"
@@ -716,7 +901,7 @@ export default function Home() {
           viewport={{ once: true }}
           variants={staggerContainer}
           className="section-content"
-          style={{ maxWidth: "960px", margin: "0 auto", textAlign: "center" }}
+          style={{ maxWidth: "960px", margin: "0 auto", textAlign: "center", padding: "4rem 2rem" }}
         >
           <motion.div
             variants={fadeInUp}
@@ -728,6 +913,9 @@ export default function Home() {
                 background: "linear-gradient(135deg, #2fb3ff, #8a7ff7)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                fontSize: "clamp(2rem, 5vw, 3rem)",
+                marginBottom: "1rem"
               }}
             >
               Stay In The Loop
@@ -736,7 +924,7 @@ export default function Home() {
 
           <motion.p
             variants={fadeInUp}
-            style={{ maxWidth: "720px", margin: "0 auto 1.5rem", lineHeight: 1.8 }}
+            style={{ maxWidth: "720px", margin: "0 auto 2rem", lineHeight: 1.8, fontSize: "clamp(1rem, 3vw, 1.1rem)" }}
           >
             <motion.span
               animate={{ 
@@ -780,6 +968,7 @@ export default function Home() {
                 color: "#ffffff",
                 outline: "none",
                 transition: "all 0.3s ease",
+                fontSize: "1rem"
               }}
             />
             
@@ -807,12 +996,14 @@ export default function Home() {
                 alignItems: "center",
                 gap: "8px",
                 transition: "background 0.3s ease",
+                fontSize: "1rem"
               }}
             >
               <motion.img 
                 src={brandIcon} 
                 alt="AkiliBridge logo" 
                 className="btn-icon"
+                style={{ width: "20px", height: "20px", borderRadius: "50%" }}
                 animate={subscribed ? { rotate: 360 } : {}}
                 transition={{ duration: 0.6 }}
               />
