@@ -105,10 +105,26 @@ export default function Footer() {
   };
 
   const socialLinks = [
-    { name: "Facebook", icon: FacebookIcon, link: "#" },
-    { name: "Instagram", icon: InstagramIcon, link: "#" },
-    { name: "X", icon: XIcon, link: "#" },
-    { name: "LinkedIn", icon: LinkedInIcon, link: "#" },
+    { 
+      name: "Facebook", 
+      icon: FacebookIcon, 
+      link: "https://web.facebook.com/akilibridge" 
+    },
+    { 
+      name: "Instagram", 
+      icon: InstagramIcon, 
+      link: "https://www.instagram.com/akilibridge/" 
+    },
+    { 
+      name: "X", 
+      icon: XIcon, 
+      link: "https://x.com/akilibridge" 
+    },
+    { 
+      name: "LinkedIn", 
+      icon: LinkedInIcon, 
+      link: "https://www.linkedin.com/in/akili-bridge-0a10b2403" 
+    },
   ];
 
   return (
@@ -308,6 +324,8 @@ export default function Footer() {
                 <motion.a
                   key={social.name}
                   href={social.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   variants={socialVariants}
                   whileHover="hover"
                   style={{
