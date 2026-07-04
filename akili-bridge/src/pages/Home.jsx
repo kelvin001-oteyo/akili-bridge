@@ -536,11 +536,11 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Stats Section with Enhanced Animations */}
+      {/* Stats Section with Enhanced Animations - UPDATED IMAGE */}
       <motion.section
         className="home-section stats-section"
         style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2070&auto=format')",
+          backgroundImage: "url('https://images.unsplash.com/photo-1523050854058-8df90110c7f1?q=80&w=2070&auto=format')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundAttachment: "fixed",
